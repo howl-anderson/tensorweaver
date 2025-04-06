@@ -1,0 +1,57 @@
+[project]
+name = "tensorweaver"
+version = "0.0.1"
+description = "A modern educational deep learning framework for students, engineers and researchers"
+authors = [
+    {name = "Xiaoquan Kong",email = "u1mail2me@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    "numpy>=1.24.0,<2.0.0",
+    "onnx (>=1.17.0,<2.0.0)",
+    "typeguard>=4.4.2,<5.0.0"
+]
+
+[tool.poetry]
+packages = [
+    { include = "tensorweaver", from = "src" }
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra -q"
+markers = [
+    "unit: mark a test as a unit test",
+    "integration: mark a test as an integration test",
+]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+black = "^24.10.0"
+pytest-cov = "^6.0.0"
+torch = "^2.5.1"
+torchvision = "^0.20.1"
+onnxruntime = "^1.17.0"
+psutil = "^6.1.1"
+objsize = "^0.7.1"
+memory-profiler = "^0.61.0"
+ipykernel = "^6.29.5"
+
+[tool.poetry.group.demo.dependencies]
+matplotlib = "^3.8.0"
+datasets = "^2.18.0"
+requests = "^2.31.0"
+ipykernel = "^6.29.5"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+numpy = "^1.24.0"
+onnx = "^1.17.0"
