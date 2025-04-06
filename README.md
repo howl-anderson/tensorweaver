@@ -25,7 +25,7 @@ Built entirely in Python with only NumPy as a dependency, TensorWeaver's codebas
 
 The target users are students, engineers and researchers who want to fully understand the working principles of deep learning frameworks and gain the skills to debug, extend and optimize their own projects with any deep learning framework.
 
-## ✨ Features
+## Features
 
 - **Purely Educational**: Designed from the ground up as a learning tool with clear, well-documented code
 - **PyTorch-like API**: Familiar interface reduces learning curve and eases transition to industrial frameworks
@@ -39,7 +39,7 @@ The target users are students, engineers and researchers who want to fully under
   - ONNX export functionality
 - **Comprehensive Documentation**: Detailed explanations of implementation details and design choices
 
-## 🔧 Installation
+## Installation
 
 ```bash
 # Install from PyPI
