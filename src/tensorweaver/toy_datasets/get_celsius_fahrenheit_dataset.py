@@ -17,7 +17,7 @@ def get_celsius_fahrenheit_dataset():
             celsius_data.append(float(row["Celsius"]))
             fahrenheit_data.append(float(row["Fahrenheit"]))
     
-    x = np.array(celsius_data).reshape(-1, 1)
-    y = np.array(fahrenheit_data).reshape(-1, 1)
+    x = np.array(celsius_data, dtype=np.float32).reshape(-1, 1)
+    y = np.array(fahrenheit_data, dtype=np.float32).reshape(-1, 1)
 
     return x, y
