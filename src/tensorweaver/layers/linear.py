@@ -10,7 +10,7 @@ class Linear(Layer):
 
         self.out_dim = out_features
         self.in_dim = in_features
-        self.bias = bias
+        self.use_bias = bias
 
         self._init_parameters()
 
@@ -21,14 +21,14 @@ class Linear(Layer):
             np.random.uniform(-bound, bound, (self.in_dim, self.out_dim)), name="weight"
         )
 
-        self.bias_weight = None
-        if self.bias:
-            self.bias_weight = Parameter(np.zeros(self.out_dim), name="bias")  # Initialize bias to zeros
+        self.bias = None
+        if self.use_bias:
+            self.bias = Parameter(np.zeros(self.out_dim), name="bias")  # Initialize bias to zeros
 
     def forward(self, x):
         output = x @ self.weight
 
-        if self.bias:
-            output = output + self.bias_weight
+        if self.use_bias:
+            output = output + self.bias
 
         return output
