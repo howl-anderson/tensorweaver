@@ -122,7 +122,7 @@ class ONNXProgram:
         self.onnx_model = onnx_model
 
     @classmethod
-    def export(cls, model, args):
+    def export(cls, model, args, f=None):
         """Export the model to ONNX format.
         
         Args:
@@ -189,7 +189,12 @@ class ONNXProgram:
         )
         onnx_model = helper.make_model(onnx_graph, opset_imports=[helper.make_opsetid("", 21)])
 
-        return cls(onnx_model)
+        instance = cls(onnx_model)
+        
+        if f is not None:
+            instance.save(f)
+        
+        return instance
     
     def save(self, destination):
         onnx.save(self.onnx_model, destination)
