@@ -335,3 +335,10 @@ class Variable:
     def tolist(self):
         """Convert the tensor to a Python list."""
         return self.data.tolist()
+
+    def detach(self):
+        """Detach the tensor from the computational graph."""
+        var = Variable(self.data)
+        var.data = self.data  # reference to the same memory
+
+        return var
