@@ -49,7 +49,8 @@ TensorWeaver targets coverage of 20% of the most commonly used PyTorch APIs, fol
 
 ## Online demo
 
-<a href="https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F01_linear_regression%2Fdemo.ipynb" target="_blank">Click here to launch the online demo</a>
+* <a href="https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F01_linear_regression%2Fdemo.ipynb" target="_blank">Training demo</a>
+* <a href="https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F02_onnx_export%2Fdemo.ipynb" target="_blank">ONNX export demo</a>
 
 ## Installation
 
