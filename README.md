@@ -41,7 +41,7 @@ The target users are students, engineers and researchers who want to fully under
 
 ## Online demo
 
-[Click here to launch the online demo](https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F01_linear_regression%2Fdemo.ipynb)
+<a href="https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F01_linear_regression%2Fdemo.ipynb" target="_blank">Click here to launch the online demo</a>
 
 ## Installation
 
