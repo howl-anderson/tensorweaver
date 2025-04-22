@@ -28,7 +28,7 @@ The target users are students, engineers and researchers who want to fully under
 ## Features
 
 - **Purely Educational**: Designed from the ground up as a learning tool with clear, well-documented code
-- **PyTorch-like API**: Familiar interface reduces learning curve and eases transition to industrial frameworks
+- **PyTorch-compatible API**: Exactly the same interface as PyTorch, so you can easily switch between TensorWeaver and PyTorch
 - **Lightweight and Readable**: Built with pure Python and minimal dependencies (merely NumPy)
 - **Fully Functional**: Supports essential deep learning components:
   - Automatic differentiation engine
@@ -38,6 +38,14 @@ The target users are students, engineers and researchers who want to fully under
 - **Advanced Capabilities**:
   - ONNX export functionality
 - **Comprehensive Documentation**: Detailed explanations of implementation details and design choices
+
+## PyTorch Compatibility
+
+TensorWeaver is designed to be compatible with PyTorch 2.6, allowing for an easier learning transition between frameworks.
+
+## PyTorch API Coverage
+
+TensorWeaver targets coverage of 20% of the most commonly used PyTorch APIs, following the 80/20 principle (where 20% of features cover 80% of use cases). The specific API list has not been compiled yet and will be determined once appropriate data sources or statistical tools are identified for analyzing API usage patterns.
 
 ## Online demo
 
