@@ -1,3 +1,5 @@
+# Pytorch reference: https://pytorch.org/docs/stable/tensors.html#torch.Tensor
+
 import numpy as np
 
 from tensorweaver.autodiff.helpers import as_ndarray, as_tensor
