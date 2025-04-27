@@ -1,6 +1,6 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.tril import tril
 
 
@@ -8,7 +8,7 @@ def test_tril_basic():
     # Test basic 2x2 matrix
     input_data = np.array([[1, 2],
                           [3, 4]], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Default diagonal (k=0)
     output = tril(input)
@@ -22,7 +22,7 @@ def test_tril_different_diagonals():
     input_data = np.array([[1, 2, 3],
                           [4, 5, 6],
                           [7, 8, 9]], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Main diagonal (k=0)
     output = tril(input, diagonal=0)
@@ -50,7 +50,7 @@ def test_tril_backward():
     # Test gradient computation
     input_data = np.array([[1, 2],
                           [3, 4]], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Forward pass
     output = tril(input)
@@ -69,7 +69,7 @@ def test_tril_rectangular():
     # Test rectangular matrices
     input_data = np.array([[1, 2, 3],
                           [4, 5, 6]], dtype=np.float32)  # 2x3 matrix
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Main diagonal (k=0)
     output = tril(input)
@@ -90,7 +90,7 @@ def test_tril_3d_input():
                            [3, 4]],
                           [[5, 6],
                            [7, 8]]], dtype=np.float32)  # 2x2x2 tensor_create
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     output = tril(input)
     expected = np.array([[[1, 0],

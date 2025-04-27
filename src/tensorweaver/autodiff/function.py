@@ -2,7 +2,7 @@ from typing import List, Union
 
 from numpy.typing import NDArray
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 from typeguard import typechecked
 
@@ -10,9 +10,9 @@ from typeguard import typechecked
 @typechecked
 class Function:
     def __init__(self):
-        self.inputs: List[Variable] = []
+        self.inputs: List[Tensor] = []
         self.input_data: List[NDArray] = []
-        self.outputs: List[Variable] = []
+        self.outputs: List[Tensor] = []
         self.output_data: List[NDArray] = []
 
     def forward(self, *inputs: NDArray) -> List[NDArray]:
@@ -21,7 +21,7 @@ class Function:
     def backward(self, *inputs: NDArray) -> List[NDArray]:
         raise NotImplementedError()
 
-    def __call__(self, *inputs: Variable) -> Union[Variable, List[Variable]]:
+    def __call__(self, *inputs: Tensor) -> Union[Tensor, List[Tensor]]:
         self.inputs = inputs
         self.input_data = [i.data for i in inputs]
 
@@ -32,7 +32,7 @@ class Function:
 
         self.output_data = outputs
 
-        outputs = [Variable(o) for o in outputs]
+        outputs = [Tensor(o) for o in outputs]
 
         for v in outputs:
             v.creator = self

@@ -2,7 +2,7 @@ import numpy as np
 
 from tensorweaver.autodiff.helpers import as_ndarray, as_variable
 
-class Variable:
+class Tensor:
     def __init__(self, data, name=None):
         self.data = as_ndarray(data) if data is not None else None
         self._grad = None
@@ -26,7 +26,7 @@ class Variable:
                 self.grad = np.ones_like(self.data)
         else:
             # check if gradient is compatible with self.data
-            if isinstance(gradient, Variable):
+            if isinstance(gradient, Tensor):
                 gradient = gradient.data
             if gradient.shape != self.data.shape:
                 raise ValueError(f"Gradient shape {gradient.shape} does not match data shape {self.data.shape}")
@@ -106,7 +106,7 @@ class Variable:
 
     @grad.setter
     def grad(self, value):
-        if isinstance(value, Variable):
+        if isinstance(value, Tensor):
             raise TypeError(f"grad cannot be a Variable object. Got {type(value)} from {value.creator if value.creator else 'unknown'}")
         self._grad = value
 
@@ -222,7 +222,7 @@ class Variable:
             keepdim (bool, optional): Whether to keep the output with the same dimensions as the input. Default is False.
         
         Returns:
-            Variable: A Variable object containing the indices of maximum values.
+            Tensor: A Variable object containing the indices of maximum values.
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.argmax import argmax
@@ -232,10 +232,10 @@ class Variable:
         """Compare whether two tensors are equal.
         
         Args:
-            other (Variable): Another tensor to compare with.
+            other (Tensor): Another tensor to compare with.
         
         Returns:
-            Variable: Variable object containing boolean values indicating whether elements at corresponding positions are equal.
+            Tensor: Variable object containing boolean values indicating whether elements at corresponding positions are equal.
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.eq import eq
@@ -245,10 +245,10 @@ class Variable:
         """Reshape the tensor to have the same shape as another tensor.
         
         Args:
-            other (Variable): Tensor with target shape.
+            other (Tensor): Tensor with target shape.
         
         Returns:
-            Variable: Reshaped tensor.
+            Tensor: Reshaped tensor.
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.view_as import view_as
@@ -262,7 +262,7 @@ class Variable:
             keepdim (bool, optional): Whether to keep the output with the same dimensions as the input. Default is False.
         
         Returns:
-            Variable: Tensor after summation.
+            Tensor: Tensor after summation.
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.sum import sum
@@ -276,7 +276,7 @@ class Variable:
             keepdims (bool, optional): Whether to keep the reduced dimensions with length 1.
         
         Returns:
-            Variable: The mean value over specified dimensions.
+            Tensor: The mean value over specified dimensions.
         """
         from tensorweaver.operators.mean import mean
         return mean(self, axis=axis, keepdims=keepdims)
@@ -299,16 +299,16 @@ class Variable:
         """Fills elements of input tensor with value where mask is True.
         
         Args:
-            mask (Variable or ndarray): Boolean mask
+            mask (Tensor or ndarray): Boolean mask
             value (float): Value to fill with
         
         Returns:
-            Variable: Output tensor with masked fill applied
+            Tensor: Output tensor with masked fill applied
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.masked_fill import masked_fill
         # Ensure value is a scalar
-        if isinstance(value, Variable):
+        if isinstance(value, Tensor):
             value = value.data.item() if hasattr(value.data, 'item') else float(value.data)
         return masked_fill(self, as_variable(mask), value)
 
@@ -319,7 +319,7 @@ class Variable:
             key: Slice index, can be an integer, slice object, or tuple.
             
         Returns:
-            Variable: Sliced tensor.
+            Tensor: Sliced tensor.
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.getitem import getitem
@@ -328,8 +328,8 @@ class Variable:
     def __lt__(self, other):
         """Support for < operator."""
         from tensorweaver.operators.lt import lt
-        if not isinstance(other, Variable):
-            other = Variable(other)
+        if not isinstance(other, Tensor):
+            other = Tensor(other)
         return lt(self, other)
 
     def tolist(self):
@@ -338,7 +338,7 @@ class Variable:
 
     def detach(self):
         """Detach the tensor from the computational graph."""
-        var = Variable(self.data)
+        var = Tensor(self.data)
         var.data = self.data  # reference to the same memory
 
         return var

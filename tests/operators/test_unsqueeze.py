@@ -1,13 +1,13 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.unsqueeze import unsqueeze
 
 
 def test_unsqueeze_basic():
     # Test basic 1D tensor_create
     input_data = np.array([1, 2, 3], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Unsqueeze at beginning (dim=0)
     output = unsqueeze(input, 0)
@@ -23,7 +23,7 @@ def test_unsqueeze_basic():
 def test_unsqueeze_multidim():
     # Test 2D tensor_create
     input_data = np.array([[1, 2], [3, 4]], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Unsqueeze at beginning
     output = unsqueeze(input, 0)
@@ -44,7 +44,7 @@ def test_unsqueeze_multidim():
 def test_unsqueeze_negative_dim():
     # Test negative dimension indices
     input_data = np.array([[1, 2], [3, 4]], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Unsqueeze at dim=-1 (equivalent to end)
     output = unsqueeze(input, -1)
@@ -65,7 +65,7 @@ def test_unsqueeze_negative_dim():
 def test_unsqueeze_backward():
     # Test gradient computation
     input_data = np.array([1, 2, 3], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Forward pass
     output = unsqueeze(input, 0)  # shape becomes (1, 3)
@@ -82,7 +82,7 @@ def test_unsqueeze_backward():
 def test_unsqueeze_scalar():
     # Test unsqueeze on scalar-like tensor_create
     input_data = np.array(5, dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Add dimension at index 0
     output = unsqueeze(input, 0)

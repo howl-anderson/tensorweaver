@@ -1,13 +1,13 @@
 import numpy as np
 import pytest
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.matmul import matmul
 
 
 def test_matmul():
     # Test basic matrix multiplication
-    a = Variable(np.asarray([[1, 2, 3], [4, 5, 6]]))  # 2x3
-    b = Variable(np.asarray([[1, 4], [2, 5], [3, 6]]))  # 3x2
+    a = Tensor(np.asarray([[1, 2, 3], [4, 5, 6]]))  # 2x3
+    b = Tensor(np.asarray([[1, 4], [2, 5], [3, 6]]))  # 3x2
 
     y = matmul(a, b)
 
@@ -29,15 +29,15 @@ def test_matmul():
 
 def test_matmul_forward():
     # Test matrix multiplication
-    a = Variable(np.array([[1, 2], [3, 4]]))
-    b = Variable(np.array([[5, 6], [7, 8]]))
+    a = Tensor(np.array([[1, 2], [3, 4]]))
+    b = Tensor(np.array([[5, 6], [7, 8]]))
     c = matmul(a, b)
     expected = np.array([[19, 22], [43, 50]])
     assert np.allclose(c.data, expected)
     
     # Test matrix-vector multiplication
-    a = Variable(np.array([[1, 2], [3, 4]]))
-    b = Variable(np.array([5, 6]))
+    a = Tensor(np.array([[1, 2], [3, 4]]))
+    b = Tensor(np.array([5, 6]))
     c = matmul(a, b)
     expected = np.array([17, 39])
     assert np.allclose(c.data, expected)
@@ -45,8 +45,8 @@ def test_matmul_forward():
     # Test batch matrix multiplication
     batch_a = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
     batch_b = [[[5, 6], [7, 8]], [[9, 10], [11, 12]]]
-    a = Variable(np.array(batch_a))
-    b = Variable(np.array(batch_b))
+    a = Tensor(np.array(batch_a))
+    b = Tensor(np.array(batch_b))
     c = matmul(a, b)
     expected = np.array([[[19, 22], [43, 50]], [[111, 122], [151, 166]]])
     assert np.allclose(c.data, expected)
@@ -54,8 +54,8 @@ def test_matmul_forward():
 
 def test_matmul_backward():
     # Test gradient computation for matrix multiplication
-    a = Variable(np.array([[1., 2.], [3., 4.]]))
-    b = Variable(np.array([[5., 6.], [7., 8.]]))
+    a = Tensor(np.array([[1., 2.], [3., 4.]]))
+    b = Tensor(np.array([[5., 6.], [7., 8.]]))
     c = matmul(a, b)
     c.backward(np.ones_like(c.data))
     
@@ -64,8 +64,8 @@ def test_matmul_backward():
     assert np.allclose(b.grad, np.array([[4., 4.], [6., 6.]]))
     
     # Test gradient computation with scalar gradient
-    a = Variable(np.array([[1., 2.], [3., 4.]]))
-    b = Variable(np.array([[5., 6.], [7., 8.]]))
+    a = Tensor(np.array([[1., 2.], [3., 4.]]))
+    b = Tensor(np.array([[5., 6.], [7., 8.]]))
     c = matmul(a, b)
     c.backward()  # Uses gradient of ones
     
@@ -75,8 +75,8 @@ def test_matmul_backward():
 
 def test_matmul_shape_validation():
     # Test invalid shapes
-    a = Variable(np.array([[1, 2, 3], [4, 5, 6]]))  # 2x3
-    b = Variable(np.array([[1, 2], [3, 4], [5, 6], [7, 8]]))  # 4x2
+    a = Tensor(np.array([[1, 2, 3], [4, 5, 6]]))  # 2x3
+    b = Tensor(np.array([[1, 2], [3, 4], [5, 6], [7, 8]]))  # 4x2
     
     with pytest.raises(ValueError):
         c = matmul(a, b)  # Should fail: 3 != 4
@@ -84,8 +84,8 @@ def test_matmul_shape_validation():
 
 def test_matmul_vector_cases():
     # Test vector-vector multiplication (inner product)
-    a = Variable(np.array([1., 2., 3.]))
-    b = Variable(np.array([4., 5., 6.]))
+    a = Tensor(np.array([1., 2., 3.]))
+    b = Tensor(np.array([4., 5., 6.]))
     c = matmul(a, b)
     assert np.isscalar(c.data) or c.data.ndim == 0
     assert np.allclose(c.data, 32.)

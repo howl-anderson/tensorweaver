@@ -1,17 +1,17 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.mean import mean
 
 
 def test_mean_forward():
     # Test 1D array
-    x = Variable(np.array([1., 2., 3., 4.]))
+    x = Tensor(np.array([1., 2., 3., 4.]))
     y = mean(x)
     assert np.allclose(y.data, 2.5)
     
     # Test 2D array
-    x = Variable(np.array([[1., 2.], [3., 4.]]))
+    x = Tensor(np.array([[1., 2.], [3., 4.]]))
     y = mean(x)
     assert np.allclose(y.data, 2.5)
     
@@ -28,28 +28,28 @@ def test_mean_forward():
 
 def test_mean_backward():
     # Test 1D array
-    x = Variable(np.array([1., 2., 3., 4.]))
+    x = Tensor(np.array([1., 2., 3., 4.]))
     y = mean(x)
     y.backward()
     # Gradient should be 1/n for each element
     assert np.allclose(x.grad, np.array([0.25, 0.25, 0.25, 0.25]))
     
     # Test 2D array
-    x = Variable(np.array([[1., 2.], [3., 4.]]))
+    x = Tensor(np.array([[1., 2.], [3., 4.]]))
     y = mean(x)
     y.backward()
     # Gradient should be 1/n for each element
     assert np.allclose(x.grad, np.array([[0.25, 0.25], [0.25, 0.25]]))
     
     # Test with axis
-    x = Variable(np.array([[1., 2.], [3., 4.]]))
+    x = Tensor(np.array([[1., 2.], [3., 4.]]))
     y = mean(x, axis=0)
     y.backward(np.array([1., 2.]))
     # Gradient should be 1/n * upstream_grad
     assert np.allclose(x.grad, np.array([[0.5, 1.], [0.5, 1.]]))
     
     # Test with keepdims
-    x = Variable(np.array([[1., 2.], [3., 4.]]))
+    x = Tensor(np.array([[1., 2.], [3., 4.]]))
     y = mean(x, axis=0, keepdims=True)
     y.backward(np.array([[1., 2.]]))
     assert np.allclose(x.grad, np.array([[0.5, 1.], [0.5, 1.]]))
@@ -63,7 +63,7 @@ def test_mean_shape():
     ]
     
     for shape in shapes:
-        x = Variable(np.random.randn(*shape))
+        x = Tensor(np.random.randn(*shape))
         
         # Test global mean
         y = mean(x)

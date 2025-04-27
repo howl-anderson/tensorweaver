@@ -1,12 +1,12 @@
 import numpy as np
 import pytest
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.transpose import transpose
 
 
 def test_transpose_2d():
-    x = Variable([[1, 2, 3], [4, 5, 6]])
+    x = Tensor([[1, 2, 3], [4, 5, 6]])
     y = transpose(x, 0, 1)
 
     # Test with default gradient (ones)
@@ -15,7 +15,7 @@ def test_transpose_2d():
     assert np.array_equal(x.grad, np.ones([2, 3]))
 
     # For second test, create a fresh computation graph
-    x = Variable([[1, 2, 3], [4, 5, 6]])  # Recreate x
+    x = Tensor([[1, 2, 3], [4, 5, 6]])  # Recreate x
     y = transpose(x, 0, 1)  # Recreate y with the new x
 
     # Test with custom gradient
@@ -28,7 +28,7 @@ def test_transpose_2d():
 
 
 def test_transpose_3d():
-    x = Variable(np.arange(24).reshape(2, 3, 4))
+    x = Tensor(np.arange(24).reshape(2, 3, 4))
     y = transpose(x, 0, 2)
 
     # Create non-uniform upstream gradient
@@ -45,7 +45,7 @@ def test_transpose_3d():
 
 
 def test_transpose_identity():
-    x = Variable([[1, 2], [3, 4]])
+    x = Tensor([[1, 2], [3, 4]])
     y = transpose(x, 0, 0)
 
     # Test with custom gradient for identity transpose
@@ -59,7 +59,7 @@ def test_transpose_identity():
 
 
 def test_transpose_invalid_dims():
-    x = Variable([[1, 2], [3, 4]])
+    x = Tensor([[1, 2], [3, 4]])
     
     with pytest.raises(IndexError):
         transpose(x, 0, 2)  # dim1 out of range
@@ -70,8 +70,8 @@ def test_transpose_invalid_dims():
 
 def test_transpose_backprop_chain():
     # Test backpropagation in a chain of operations
-    x = Variable([[1.0, 2.0, 3.0], 
-                 [4.0, 5.0, 6.0]])
+    x = Tensor([[1.0, 2.0, 3.0],
+                [4.0, 5.0, 6.0]])
     y = transpose(x, 0, 1)  # 3x2 matrix
     z = transpose(y, 0, 1)  # Back to 2x3, should be same as x
     

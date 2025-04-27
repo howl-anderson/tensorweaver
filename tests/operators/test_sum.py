@@ -1,11 +1,11 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.sum import sum
 
 
 def test_sum():
-    x = Variable(np.asarray([[1, 2, 3], [4, 5, 6]]))
+    x = Tensor(np.asarray([[1, 2, 3], [4, 5, 6]]))
 
     y = sum(x)
 

@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class TopK(Function):
     def __init__(self, k):
@@ -56,7 +56,7 @@ def topk(x, k):
     Returns the k largest elements of the input tensor along the last dimension.
     
     Args:
-        x (Variable): input tensor
+        x (Tensor): input tensor
         k (int): number of top elements to return
         
     Returns:

@@ -1,6 +1,6 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.layers.multihead_attention import MultiheadAttention
 
 
@@ -12,9 +12,9 @@ def test_basic_multihead_attention():
     mha = MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads)
     
     # Create input data
-    query = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    key = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    value = Variable(np.random.randn(batch_size, seq_len, embed_dim))
+    query = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    key = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    value = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
     
     # Forward propagation
     output = mha(query, key, value)
@@ -30,9 +30,9 @@ def test_attention_scaling():
     mha = MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads)
     
     # Create specific input to make Q and K dot product large
-    query = Variable(np.ones((batch_size, seq_len, embed_dim)) * 2)
-    key = Variable(np.ones((batch_size, seq_len, embed_dim)) * 2)
-    value = Variable(np.ones((batch_size, seq_len, embed_dim)))
+    query = Tensor(np.ones((batch_size, seq_len, embed_dim)) * 2)
+    key = Tensor(np.ones((batch_size, seq_len, embed_dim)) * 2)
+    value = Tensor(np.ones((batch_size, seq_len, embed_dim)))
     
     output = mha(query, key, value)
     
@@ -48,9 +48,9 @@ def test_different_sequence_lengths():
     
     mha = MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads)
     
-    query = Variable(np.random.randn(batch_size, q_len, embed_dim))
-    key = Variable(np.random.randn(batch_size, k_len, embed_dim))
-    value = Variable(np.random.randn(batch_size, k_len, embed_dim))
+    query = Tensor(np.random.randn(batch_size, q_len, embed_dim))
+    key = Tensor(np.random.randn(batch_size, k_len, embed_dim))
+    value = Tensor(np.random.randn(batch_size, k_len, embed_dim))
     
     output = mha(query, key, value)
     
@@ -70,9 +70,9 @@ def test_head_dimension_alignment():
     assert head_dim == 4
     
     batch_size, seq_len = 2, 3
-    query = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    key = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    value = Variable(np.random.randn(batch_size, seq_len, embed_dim))
+    query = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    key = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    value = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
     
     output = mha(query, key, value)
     
@@ -86,9 +86,9 @@ def test_attention_mask():
     
     mha = MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads, bias=True)
     
-    query = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    key = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    value = Variable(np.random.randn(batch_size, seq_len, embed_dim))
+    query = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    key = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    value = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
     
     output = mha(query, key, value)
     
@@ -105,9 +105,9 @@ def test_gradient_flow():
     
     mha = MultiheadAttention(embed_dim=embed_dim, num_heads=num_heads)
     
-    query = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    key = Variable(np.random.randn(batch_size, seq_len, embed_dim))
-    value = Variable(np.random.randn(batch_size, seq_len, embed_dim))
+    query = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    key = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
+    value = Tensor(np.random.randn(batch_size, seq_len, embed_dim))
     
     output = mha(query, key, value)
     

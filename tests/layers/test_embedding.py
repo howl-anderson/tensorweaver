@@ -1,6 +1,6 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.layers.embedding import Embedding
 
 
@@ -26,7 +26,7 @@ def test_embedding_forward():
     layer.embedding_weights.data = np.arange(vocab_size * embedding_dim).reshape(vocab_size, embedding_dim)
     
     # Test single sequence
-    x = Variable(np.array([1, 3, 5]))
+    x = Tensor(np.array([1, 3, 5]))
     output = layer(x)
     assert output.data.shape == (3, embedding_dim)
     assert np.allclose(output.data[0], layer.embedding_weights.data[1])
@@ -34,7 +34,7 @@ def test_embedding_forward():
     assert np.allclose(output.data[2], layer.embedding_weights.data[5])
     
     # Test batch processing
-    x_batch = Variable(np.array([[1, 3, 5], [2, 4, 6]]))
+    x_batch = Tensor(np.array([[1, 3, 5], [2, 4, 6]]))
     output_batch = layer(x_batch)
     assert output_batch.data.shape == (2, 3, embedding_dim)
 
@@ -48,7 +48,7 @@ def test_embedding_with_padding():
     assert np.allclose(layer.embedding_weights.data[padding_idx], 0)
     
     # Test sequence containing padding
-    x = Variable(np.array([[1, 0, 2], [0, 0, 3]]))
+    x = Tensor(np.array([[1, 0, 2], [0, 0, 3]]))
     output = layer(x)
     
     # Check whether the output at the padding position is 0
@@ -69,11 +69,11 @@ def test_embedding_backward():
     ])
     
     # Forward pass
-    x = Variable(np.array([[0, 1], [2, 3]]))  # batch_size=2, seq_len=2
+    x = Tensor(np.array([[0, 1], [2, 3]]))  # batch_size=2, seq_len=2
     output = layer(x)
     
     # Backward pass
-    grad_output = Variable(np.ones_like(output.data))
+    grad_output = Tensor(np.ones_like(output.data))
     output.backward(grad_output)
     
     # Check gradient shape
@@ -97,7 +97,7 @@ def test_embedding_large_vocab():
     # Test large batch input
     batch_size = 32
     seq_length = 512
-    x = Variable(np.random.randint(0, vocab_size, size=(batch_size, seq_length)))
+    x = Tensor(np.random.randint(0, vocab_size, size=(batch_size, seq_length)))
     
     output = layer(x)
     assert output.data.shape == (batch_size, seq_length, embedding_dim)
@@ -112,7 +112,7 @@ def test_embedding_with_zero_init_padding():
     assert np.allclose(layer.embedding_weights.data[padding_idx], 0)
     
     # Forward pass
-    x = Variable(np.array([[1, 2, 3], [2, 2, 1]]))
+    x = Tensor(np.array([[1, 2, 3], [2, 2, 1]]))
     output = layer(x)
     
     # Verify whether the output at the padding position remains 0

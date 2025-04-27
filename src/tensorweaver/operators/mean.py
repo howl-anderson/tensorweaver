@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class Mean(Function):
     def __init__(self, axis=None, keepdims=False):
@@ -46,11 +46,11 @@ def mean(x, axis=None, keepdims=False):
     """Compute the mean of a tensor_create over specified dimensions.
     
     Args:
-        x (Variable): Input tensor_create.
+        x (Tensor): Input tensor_create.
         axis (int or tuple of ints, optional): Dimensions to reduce. If None, reduces all dimensions.
         keepdims (bool, optional): Whether to keep the reduced dimensions with length 1.
     
     Returns:
-        Variable: The mean value over specified dimensions.
+        Tensor: The mean value over specified dimensions.
     """
     return Mean(axis=axis, keepdims=keepdims)(x) 

@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class Multinomial(Function):
     def __init__(self, num_samples):
@@ -41,10 +41,10 @@ def multinomial(probs, num_samples):
     Draws samples from a multinomial probability distribution.
     
     Args:
-        probs (Variable): probability distribution tensor
+        probs (Tensor): probability distribution tensor
         num_samples (int): number of samples to draw
         
     Returns:
-        Variable: tensor of sampled indices
+        Tensor: tensor of sampled indices
     """
     return Multinomial(num_samples)(probs) 

@@ -1,16 +1,16 @@
 import numpy as np
 import pytest
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.autodiff.function import Function
 
 
 @pytest.mark.parametrize(
     "a,b,expected",
     [
-        (Variable(2.0), Variable(3.0), 5.0),
-        (2.0, Variable(3.0), 5.0),
-        (Variable(2.0), 3.0, 5.0),
+        (Tensor(2.0), Tensor(3.0), 5.0),
+        (2.0, Tensor(3.0), 5.0),
+        (Tensor(2.0), 3.0, 5.0),
     ],
 )
 def test_add(a, b, expected):
@@ -23,9 +23,9 @@ def test_add(a, b, expected):
 @pytest.mark.parametrize(
     "a,b,expected",
     [
-        (Variable(2.0), Variable(3.0), -1.0),
-        (2.0, Variable(3.0), -1.0),
-        (Variable(2.0), 3.0, -1.0),
+        (Tensor(2.0), Tensor(3.0), -1.0),
+        (2.0, Tensor(3.0), -1.0),
+        (Tensor(2.0), 3.0, -1.0),
     ],
 )
 def test_sub(a, b, expected):
@@ -38,9 +38,9 @@ def test_sub(a, b, expected):
 @pytest.mark.parametrize(
     "a,b,expected",
     [
-        (Variable(2.0), Variable(3.0), 6.0),
-        (2.0, Variable(3.0), 6.0),
-        (Variable(2.0), 3.0, 6.0),
+        (Tensor(2.0), Tensor(3.0), 6.0),
+        (2.0, Tensor(3.0), 6.0),
+        (Tensor(2.0), 3.0, 6.0),
     ],
 )
 def test_mul(a, b, expected):
@@ -53,9 +53,9 @@ def test_mul(a, b, expected):
 @pytest.mark.parametrize(
     "a,b,expected",
     [
-        (Variable(12.0), Variable(3.0), 4.0),
-        (12.0, Variable(3.0), 4.0),
-        (Variable(12.0), 3.0, 4.0),
+        (Tensor(12.0), Tensor(3.0), 4.0),
+        (12.0, Tensor(3.0), 4.0),
+        (Tensor(12.0), 3.0, 4.0),
     ],
 )
 def test_div(a, b, expected):
@@ -89,8 +89,8 @@ class MulFunction(Function):
 def test_backward_simple_add():
     """Test backward propagation through a simple addition"""
     # Create computation graph: z = x + y
-    x = Variable(2.0)
-    y = Variable(3.0)
+    x = Tensor(2.0)
+    y = Tensor(3.0)
     add_fn = AddFunction()
     z = add_fn(x, y)
 
@@ -105,8 +105,8 @@ def test_backward_simple_add():
 def test_backward_simple_multiply():
     """Test backward propagation through multiplication"""
     # Create computation graph: z = x * y
-    x = Variable(2.0)
-    y = Variable(3.0)
+    x = Tensor(2.0)
+    y = Tensor(3.0)
     mul_fn = MulFunction()
     z = mul_fn(x, y)
 
@@ -126,11 +126,11 @@ def test_backward_diamond_shape():
     #   +   *
     #    \ /
     #     +
-    x = Variable(2.0)
+    x = Tensor(2.0)
     add_fn1 = AddFunction()
     mul_fn = MulFunction()
-    path1 = add_fn1(x, Variable(1.0))  # path1 = x + 1
-    path2 = mul_fn(x, Variable(2.0))   # path2 = x * 2
+    path1 = add_fn1(x, Tensor(1.0))  # path1 = x + 1
+    path2 = mul_fn(x, Tensor(2.0))   # path2 = x * 2
     add_fn2 = AddFunction()
     result = add_fn2(path1, path2)     # result = (x + 1) + (x * 2)
 
@@ -143,8 +143,8 @@ def test_backward_diamond_shape():
 
 def test_backward_clean_grad():
     """Test that clean_grad properly resets gradients"""
-    x = Variable(2.0)
-    y = Variable(3.0)
+    x = Tensor(2.0)
+    y = Tensor(3.0)
     mul_fn = MulFunction()
     z = mul_fn(x, y)
 

@@ -14,7 +14,7 @@ from onnx.helper import (
 
 from tensorweaver.autodiff.function import Function
 from tensorweaver.autodiff.topological_sort import topological_sort
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.onnx.registry import registry
 from tensorweaver.onnx.utils import ONNXTypeMapper, NameManager
 from tensorweaver.parameter import Parameter
@@ -31,13 +31,13 @@ class GraphInfo:
         intermediate_tensors: List of intermediate tensors
         functions: List of function nodes
     """
-    inputs: List[Variable]
-    outputs: List[Variable]
+    inputs: List[Tensor]
+    outputs: List[Tensor]
     parameters: List[Parameter]
-    intermediate_tensors: List[Variable]
+    intermediate_tensors: List[Tensor]
     functions: List[Function]
 
-def collect_graph_info(inputs: List[Variable], output: Variable) -> GraphInfo:
+def collect_graph_info(inputs: List[Tensor], output: Tensor) -> GraphInfo:
     """Collect information about all components in the computational graph.
     
     Traverses the computational graph based on topological sorting, collecting all
@@ -91,7 +91,7 @@ def convert_variable(var, name_manager):
     """Convert a Variable to ONNX ValueInfoProto.
     
     Args:
-        var (Variable): Variable to convert
+        var (Tensor): Variable to convert
         name_manager (NameManager): Variable name manager
         
     Returns:
@@ -141,7 +141,7 @@ class ONNXProgram:
         
         # 1. Run the model to get output
         output = model(*args)
-        if not isinstance(output, Variable):
+        if not isinstance(output, Tensor):
             raise TypeError(f"Model output must be a Variable, got {type(output)}")
         
         # 2. Collect computational graph information

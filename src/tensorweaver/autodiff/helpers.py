@@ -15,9 +15,9 @@ def as_ndarray(x, like_to : NDArray = None) -> NDArray:
 
 def as_variable(x, like_to: "Variable" = None) -> "Variable":
     # lazy load to avoid import circle
-    from tensorweaver.autodiff.variable import Variable
+    from tensorweaver.autodiff.tensor import Tensor
 
-    if not isinstance(x, Variable):
-        return Variable(as_ndarray(x, like_to.data if like_to else None))
+    if not isinstance(x, Tensor):
+        return Tensor(as_ndarray(x, like_to.data if like_to else None))
 
     return x

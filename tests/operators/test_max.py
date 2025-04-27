@@ -1,12 +1,12 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.max import Max
 
 
 def test_max_scalar():
     """Test max operation with scalar input"""
-    x = Variable(5.0)
+    x = Tensor(5.0)
     y = Max()(x)
     
     # Test forward pass
@@ -19,7 +19,7 @@ def test_max_scalar():
 
 def test_max_1d_array():
     """Test max operation with 1D array"""
-    x = Variable(np.array([1.0, 3.0, 2.0, 5.0, 4.0]))
+    x = Tensor(np.array([1.0, 3.0, 2.0, 5.0, 4.0]))
     y = Max()(x)
     
     # Test forward pass
@@ -33,8 +33,8 @@ def test_max_1d_array():
 
 def test_max_2d_array_global():
     """Test max operation with 2D array (global max)"""
-    x = Variable(np.array([[1.0, 3.0, 2.0],
-                          [5.0, 4.0, 6.0]]))
+    x = Tensor(np.array([[1.0, 3.0, 2.0],
+                         [5.0, 4.0, 6.0]]))
     y = Max()(x)
     
     # Test forward pass
@@ -49,8 +49,8 @@ def test_max_2d_array_global():
 
 def test_max_2d_array_axis():
     """Test max operation with 2D array along specific axis"""
-    x = Variable(np.array([[1.0, 3.0, 2.0],
-                          [5.0, 4.0, 6.0]]))
+    x = Tensor(np.array([[1.0, 3.0, 2.0],
+                         [5.0, 4.0, 6.0]]))
     
     # Test max along axis 0 (column-wise)
     y0 = Max(axis=0)(x)
@@ -80,7 +80,7 @@ def test_max_2d_array_axis():
 
 def test_max_duplicate_values():
     """Test max operation when there are multiple maximum values"""
-    x = Variable(np.array([1.0, 5.0, 2.0, 5.0, 3.0]))
+    x = Tensor(np.array([1.0, 5.0, 2.0, 5.0, 3.0]))
     y = Max()(x)
     
     # Test forward pass
@@ -96,7 +96,7 @@ def test_max_duplicate_values():
 def test_max_3d_array():
     """Test max operation with 3D array"""
     x_data = np.arange(24).reshape(2, 3, 4)
-    x = Variable(x_data)
+    x = Tensor(x_data)
     
     # Test global max
     y = Max()(x)

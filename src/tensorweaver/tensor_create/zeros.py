@@ -1,6 +1,6 @@
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 import numpy as np
 
 
 def zeros(shape):
-    return Variable(np.zeros(shape))
+    return Tensor(np.zeros(shape))

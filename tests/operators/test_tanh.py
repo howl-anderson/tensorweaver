@@ -1,12 +1,12 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.tanh import tanh
 
 
 def test_tanh_scalar():
     """Test tanh operation with scalar input"""
-    x = Variable(0.0)
+    x = Tensor(0.0)
     y = tanh(x)
     
     # Test forward pass
@@ -19,7 +19,7 @@ def test_tanh_scalar():
 
 def test_tanh_array():
     """Test tanh operation with array input"""
-    x = Variable(np.array([0.0, 1.0, -1.0]))
+    x = Tensor(np.array([0.0, 1.0, -1.0]))
     y = tanh(x)
     
     # Test forward pass
@@ -34,7 +34,7 @@ def test_tanh_array():
 
 def test_tanh_2d_array():
     """Test tanh operation with 2D array"""
-    x = Variable(np.array([[0.0, 1.0], [-1.0, 2.0]]))
+    x = Tensor(np.array([[0.0, 1.0], [-1.0, 2.0]]))
     y = tanh(x)
     
     # Test forward pass
@@ -49,7 +49,7 @@ def test_tanh_2d_array():
 
 def test_tanh_large_values():
     """Test tanh operation with large values"""
-    x = Variable(np.array([100.0, -100.0]))
+    x = Tensor(np.array([100.0, -100.0]))
     y = tanh(x)
     
     # Test forward pass

@@ -4,7 +4,7 @@ from tensorweaver.layers.layer import Layer
 from tensorweaver.layers.linear import Linear
 from tensorweaver.operators.softmax import softmax
 from tensorweaver.operators.transpose import transpose
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class MultiheadAttention(Layer):
     def __init__(self, embed_dim, num_heads, dropout=0.0, bias=True):
@@ -26,7 +26,7 @@ class MultiheadAttention(Layer):
         mask = -1e9 * mask
         # Expand dimensions to match the shape of attention scores [batch_size * num_heads, q_len, k_len]
         mask = np.broadcast_to(mask, (batch_size * num_heads, q_len, k_len))
-        return Variable(mask)
+        return Tensor(mask)
         
     def forward(self, query, key, value):
         batch_size = query.shape[0]

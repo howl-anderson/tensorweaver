@@ -2,13 +2,13 @@ import numpy as np
 import pytest
 
 from tensorweaver.operators.view import view
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 
 def test_view_basic():
     # Test basic shape transformation
     input_data = np.array([[1, 2, 3, 4]], dtype=np.float32)  # shape: (1, 4)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Reshape to (2, 2)
     output = view(input, 2, 2)
@@ -20,7 +20,7 @@ def test_view_basic():
 def test_view_flatten():
     # Test flattening a tensor
     input_data = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]], dtype=np.float32)  # shape: (2, 2, 2)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Flatten to 1D
     output = view(input, -1)
@@ -32,7 +32,7 @@ def test_view_flatten():
 def test_view_with_negative_dim():
     # Test using -1 to infer dimension
     input_data = np.array([1, 2, 3, 4, 5, 6], dtype=np.float32)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Reshape to (2, 3) using -1
     output = view(input, 2, -1)
@@ -50,7 +50,7 @@ def test_view_with_negative_dim():
 def test_view_backward():
     # Test gradient computation
     input_data = np.array([[1, 2], [3, 4]], dtype=np.float32)  # shape: (2, 2)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Forward pass: reshape to (4,)
     output = view(input, -1)
@@ -67,7 +67,7 @@ def test_view_backward():
 def test_view_preserve_contiguity():
     # Test that view preserves memory layout
     input_data = np.array([[1, 2, 3], [4, 5, 6]], dtype=np.float32)  # shape: (2, 3)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Reshape to (3, 2)
     output = view(input, 3, 2)
@@ -81,7 +81,7 @@ def test_view_preserve_contiguity():
 def test_view_invalid_size():
     # Test that invalid shapes raise errors
     input_data = np.array([[1, 2], [3, 4]], dtype=np.float32)  # shape: (2, 2)
-    input = Variable(input_data)
+    input = Tensor(input_data)
     
     # Try to reshape to incompatible shape
     with pytest.raises(ValueError):

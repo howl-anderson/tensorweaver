@@ -1,12 +1,12 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.mul import mul
 
 
 def test_mul():
-    a = Variable(np.asarray(2))
-    b = Variable(np.asarray(3))
+    a = Tensor(np.asarray(2))
+    b = Tensor(np.asarray(3))
 
     y = mul(a, b)
 

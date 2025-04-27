@@ -3,12 +3,12 @@ from tensorweaver.autodiff.helpers import as_variable
 
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 
 def np_sum_to(x, shape):
     # copied from dezero
-    if isinstance(x, Variable):
+    if isinstance(x, Tensor):
         x = x.data
     ndim = len(shape)
     lead = x.ndim - ndim

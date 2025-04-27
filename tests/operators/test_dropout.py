@@ -2,13 +2,13 @@ import numpy as np
 import pytest
 from numpy.testing import assert_array_equal
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.dropout import dropout
 
 
 def test_basic_dropout():
     # Test basic dropout functionality
-    x = Variable(np.ones((100, 100)))
+    x = Tensor(np.ones((100, 100)))
     out = dropout(x, p=0.5)
     
     # Check output shape
@@ -22,7 +22,7 @@ def test_basic_dropout():
 
 def test_different_dropout_rates():
     # Test different dropout rates
-    x = Variable(np.ones((1000,)))
+    x = Tensor(np.ones((1000,)))
     rates = [0.1, 0.3, 0.5, 0.7, 0.9]
     
     for p in rates:
@@ -34,7 +34,7 @@ def test_different_dropout_rates():
 
 def test_training_eval_modes():
     # Test training and evaluation modes
-    x = Variable(np.ones((100,)))
+    x = Tensor(np.ones((100,)))
     
     # Training mode
     train_out = dropout(x, p=0.5, training=True)
@@ -46,7 +46,7 @@ def test_training_eval_modes():
 
 def test_gradient_flow():
     # Test gradient flow
-    x = Variable(np.ones((10,)))
+    x = Tensor(np.ones((10,)))
     out = dropout(x, p=0.5)
     
     # Backward propagation
@@ -57,14 +57,14 @@ def test_gradient_flow():
     assert x.grad.shape == x.data.shape
     
     # Check gradient in evaluation mode
-    x = Variable(np.ones((10,)))
+    x = Tensor(np.ones((10,)))
     out = dropout(x, p=0.5, training=False)
     out.backward(np.ones_like(out.data))
     assert_array_equal(x.grad, np.ones_like(x.data))
 
 def test_numerical_stability():
     # Test numerical stability
-    x = Variable(np.random.randn(1000) * 1000)  # Use large numbers
+    x = Tensor(np.random.randn(1000) * 1000)  # Use large numbers
     out = dropout(x, p=0.5)
     
     # Check for infinities or NaNs
@@ -72,7 +72,7 @@ def test_numerical_stability():
     assert not np.any(np.isinf(out.data))
     
     # Test small numbers
-    x = Variable(np.random.randn(1000) * 1e-6)
+    x = Tensor(np.random.randn(1000) * 1e-6)
     out = dropout(x, p=0.5)
     assert not np.any(np.isnan(out.data))
     assert not np.any(np.isinf(out.data))
@@ -88,13 +88,13 @@ def test_shape_preservation():
     ]
     
     for shape in shapes:
-        x = Variable(np.ones(shape))
+        x = Tensor(np.ones(shape))
         out = dropout(x, p=0.5)
         assert out.data.shape == shape
 
 def test_expectation_preservation():
     # Test whether the expected value is preserved
-    x = Variable(np.ones((10000,)) * 2.0)  # Array of all 2s
+    x = Tensor(np.ones((10000,)) * 2.0)  # Array of all 2s
     out = dropout(x, p=0.5)
     
     # Due to scaling, non-zero elements should be 4.0
@@ -107,7 +107,7 @@ def test_expectation_preservation():
 
 def test_invalid_dropout_rate():
     # Test invalid dropout rates
-    x = Variable(np.ones((10,)))
+    x = Tensor(np.ones((10,)))
     
     with pytest.raises(ValueError):
         dropout(x, p=1.5)  # p > 1

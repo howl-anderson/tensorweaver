@@ -1,5 +1,5 @@
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class Flatten(Function):
     def __init__(self, start_dim=0, end_dim=-1):
@@ -37,11 +37,11 @@ def flatten(input, start_dim=0, end_dim=-1):
     """Flatten the tensor over a specified dimension range.
 
     Args:
-        input (Variable): Input tensor
+        input (Tensor): Input tensor
         start_dim (int, optional): Starting dimension to flatten. Defaults to 0.
         end_dim (int, optional): Ending dimension to flatten (inclusive). Defaults to -1.
 
     Returns:
-        Variable: Flattened tensor
+        Tensor: Flattened tensor
     """
     return Flatten(start_dim, end_dim)(input)

@@ -1,10 +1,10 @@
 import numpy as np
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.exp import exp
 
 
 def test_exp():
-    x = Variable(np.asarray(1))
+    x = Tensor(np.asarray(1))
 
     y = exp(x)
 

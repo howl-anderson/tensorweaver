@@ -1,10 +1,10 @@
 from typing import List
 import collections
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 
-def topological_sort(var: Variable) -> List[Variable]:
+def topological_sort(var: Tensor) -> List[Tensor]:
     """
     Using BFS to get topological sort of graph variables
     """

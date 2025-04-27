@@ -1,5 +1,5 @@
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class MaskedFill(Function):
     def __init__(self, value):
@@ -16,7 +16,7 @@ class MaskedFill(Function):
             output: tensor with elements replaced by value where mask is True
         """
         # Convert mask to numpy array if it's a Variable
-        if isinstance(mask, Variable):
+        if isinstance(mask, Tensor):
             mask = mask.data
             
         # Convert mask to boolean array
@@ -44,11 +44,11 @@ def masked_fill(x, mask, value):
     Fills elements of input tensor with value where mask is True.
     
     Args:
-        x (Variable): input tensor
-        mask (Variable): boolean mask
+        x (Tensor): input tensor
+        mask (Tensor): boolean mask
         value (float): value to fill with
         
     Returns:
-        Variable: output tensor with masked fill applied
+        Tensor: output tensor with masked fill applied
     """
     return MaskedFill(value)(x, mask) 

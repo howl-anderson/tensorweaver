@@ -1,11 +1,11 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.sqrt import sqrt
 
 
 def test_sqrt():
-    a = Variable(3.0)
+    a = Tensor(3.0)
 
     b = sqrt(a)
 

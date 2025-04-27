@@ -1,8 +1,8 @@
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 import numpy as np
 
 
 def ones(*size, dtype=None):
     if dtype is None:
         dtype = np.float32
-    return Variable(np.ones(size, dtype=dtype))
+    return Tensor(np.ones(size, dtype=dtype))

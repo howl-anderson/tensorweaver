@@ -1,12 +1,12 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.add import add
 
 
 def test_add():
-    a = Variable(np.asarray([1, 2]))
-    b = Variable(np.asarray([3, 4]))
+    a = Tensor(np.asarray([1, 2]))
+    b = Tensor(np.asarray([3, 4]))
 
     y = add(a, b)
 

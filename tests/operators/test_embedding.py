@@ -1,19 +1,19 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.embedding import embedding
 
 
 def test_basic_embedding():
     # Create a simple embedding weight matrix
-    weight = Variable(np.array([
+    weight = Tensor(np.array([
         [1.0, 2.0, 3.0],  # id 0
         [4.0, 5.0, 6.0],  # id 1
         [7.0, 8.0, 9.0]   # id 2
     ]))
     
     # Create input indices
-    indices = Variable(np.array([1, 0, 2]))
+    indices = Tensor(np.array([1, 0, 2]))
     
     # Use embedding function
     output = embedding(indices, weight)
@@ -28,13 +28,13 @@ def test_basic_embedding():
     assert np.allclose(output.data, expected)
 
 def test_embedding_with_padding():
-    weight = Variable(np.array([
+    weight = Tensor(np.array([
         [1.0, 2.0],  # id 0
         [3.0, 4.0],  # id 1
         [5.0, 6.0]   # id 2
     ]))
     
-    indices = Variable(np.array([1, 0, 2, 0]))
+    indices = Tensor(np.array([1, 0, 2, 0]))
     
     # Use embedding function with padding_idx
     output = embedding(indices, weight, padding_idx=0)
@@ -50,17 +50,17 @@ def test_embedding_with_padding():
     assert np.allclose(output.data, expected)
 
 def test_embedding_backward():
-    weight = Variable(np.array([
+    weight = Tensor(np.array([
         [1.0, 2.0],
         [3.0, 4.0]
     ]))
     
-    indices = Variable(np.array([0, 1, 0]))
+    indices = Tensor(np.array([0, 1, 0]))
     
     output = embedding(indices, weight)
     
     # Simulate gradient from next layer
-    grad_output = Variable(np.array([
+    grad_output = Tensor(np.array([
         [0.1, 0.2],  # grad for first sample
         [0.3, 0.4],  # grad for second sample
         [0.5, 0.6]   # grad for third sample
@@ -80,7 +80,7 @@ def test_embedding_backward():
 
 def test_transformer_style_batch_embedding():
     # Create a weight matrix with vocabulary size 4 and embedding dimension 3
-    weight = Variable(np.array([
+    weight = Tensor(np.array([
         [1.0, 2.0, 3.0],  # id 0: <PAD>
         [4.0, 5.0, 6.0],  # id 1: token1
         [7.0, 8.0, 9.0],  # id 2: token2
@@ -91,7 +91,7 @@ def test_transformer_style_batch_embedding():
     # Simulating two sequences:
     # Sequence 1: [1, 2, 3, 0]  (0 is padding)
     # Sequence 2: [2, 1, 0, 0]  (the last two 0s are padding)
-    indices = Variable(np.array([
+    indices = Tensor(np.array([
         [1, 2, 3, 0],
         [2, 1, 0, 0]
     ]))
@@ -121,7 +121,7 @@ def test_transformer_style_batch_embedding():
     assert np.allclose(output.data[1], expected_seq2)
     
     # Test backpropagation
-    grad_output = Variable(np.ones((2, 4, 3)))
+    grad_output = Tensor(np.ones((2, 4, 3)))
     output.backward(grad_output)
     
     # Verify gradients

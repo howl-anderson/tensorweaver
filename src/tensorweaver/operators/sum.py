@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 
 class Sum(Function):
@@ -35,11 +35,11 @@ def sum(x, dim=None, keepdim=False):
     """Calculate the sum of a tensor along the specified dimension.
     
     Args:
-        x (Variable): Input tensor.
+        x (Tensor): Input tensor.
         dim (int, optional): Dimension to reduce. Default is None, meaning compute the sum of all elements.
         keepdim (bool, optional): Whether to keep the output with the same dimensions as the input. Default is False.
     
     Returns:
-        Variable: Tensor after summation.
+        Tensor: Tensor after summation.
     """
     return Sum(dim=dim, keepdim=keepdim)(x)

@@ -6,7 +6,7 @@ import tempfile
 
 import tensorweaver as tw
 from tensorweaver.onnx.onnx_program import export
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.autodiff.function import Function
 from tensorweaver.operators.add import Add
 from tensorweaver import Parameter
@@ -25,8 +25,8 @@ def model():
 def test_simple_add(model):
     """Test simple addition model export"""
     # Create test inputs
-    x = Variable(np.array([1, 2, 3], dtype=np.float32), name="input_1")
-    y = Variable(np.array([4, 5, 6], dtype=np.float32), name="input_2")
+    x = Tensor(np.array([1, 2, 3], dtype=np.float32), name="input_1")
+    y = Tensor(np.array([4, 5, 6], dtype=np.float32), name="input_2")
     
     # Export model using temporary file
     with tempfile.NamedTemporaryFile(suffix='.onnx') as f:
@@ -65,8 +65,8 @@ def test_simple_add(model):
 def test_add_with_broadcast(model):
     """Test addition model export with broadcasting"""
     # Create test inputs (with broadcasting)
-    x = Variable(np.array([[1, 2, 3]], dtype=np.float32), name="input_1")  # shape: (1, 3)
-    y = Variable(np.array([4, 5, 6], dtype=np.float32), name="input_2")    # shape: (3,)
+    x = Tensor(np.array([[1, 2, 3]], dtype=np.float32), name="input_1")  # shape: (1, 3)
+    y = Tensor(np.array([4, 5, 6], dtype=np.float32), name="input_2")    # shape: (3,)
     
     # Export model using temporary file
     with tempfile.NamedTemporaryFile(suffix='.onnx') as f:
@@ -146,7 +146,7 @@ def test_simple_add():
     # Create inputs
     x = np.array([[1, 2], [3, 4]], dtype=np.float32)
     y = np.array([[5, 6], [7, 8]], dtype=np.float32)
-    args = [Variable(x), Variable(y)]
+    args = [Tensor(x), Tensor(y)]
     
     # Run model and verify
     model = SimpleAdd()
@@ -181,7 +181,7 @@ def test_chain_add():
     a = np.array([[1, 2]], dtype=np.float32)
     b = np.array([[3, 4]], dtype=np.float32)
     c = np.array([[5, 6]], dtype=np.float32)
-    args = [Variable(x) for x in [a, b, c]]
+    args = [Tensor(x) for x in [a, b, c]]
     
     # Run model and verify
     model = ChainAdd()
@@ -218,7 +218,7 @@ def test_tree_add():
     
     # Create inputs
     inputs = [np.array([[i]], dtype=np.float32) for i in range(1, 5)]
-    args = [Variable(x) for x in inputs]
+    args = [Tensor(x) for x in inputs]
     
     # Run model and verify
     model = TreeAdd()
@@ -255,7 +255,7 @@ def test_diamond_add():
     # Create inputs
     x = np.array([[1, 2]], dtype=np.float32)
     y = np.array([[3, 4]], dtype=np.float32)
-    args = [Variable(x), Variable(y)]
+    args = [Tensor(x), Tensor(y)]
     
     # Run model and verify
     model = DiamondAdd()
@@ -292,7 +292,7 @@ def test_parameter_add():
     
     # Create input
     x = np.array([[3, 4]], dtype=np.float32)
-    args = [Variable(x)]
+    args = [Tensor(x)]
     
     # Run model and verify
     model = ParameterAdd()

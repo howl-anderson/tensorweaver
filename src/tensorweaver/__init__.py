@@ -15,11 +15,11 @@ from tensorweaver import autograd
 from tensorweaver import optim
 from tensorweaver import onnx
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.parameter import Parameter
 
 def tensor(data):
-    return Variable(data)
+    return Tensor(data)
 
 from tensorweaver.operators.faltten import flatten
 from tensorweaver.operators.tanh import tanh

@@ -1,7 +1,7 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 
 def arange(start, end, step=1):
-    return Variable(np.arange(start, end, step))
+    return Tensor(np.arange(start, end, step))

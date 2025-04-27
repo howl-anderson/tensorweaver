@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class Cat(Function):
     def __init__(self, dim=0):
@@ -44,7 +44,7 @@ def cat(tensors, dim=0):
         dim (int): dimension along which to concatenate
         
     Returns:
-        Variable: concatenated tensor
+        Tensor: concatenated tensor
     """
     if isinstance(tensors, (list, tuple)):
         return Cat(dim)(*tensors)

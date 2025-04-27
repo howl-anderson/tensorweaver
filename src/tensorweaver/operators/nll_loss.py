@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class NLLLoss(Function):
     def __init__(self, reduction='mean'):
@@ -58,11 +58,11 @@ def nll_loss(input, target, reduction='mean'):
     """Calculate negative log likelihood loss.
 
     Args:
-        input (Variable): Log probabilities of shape (N, C)
-        target (Variable): Target class indices of shape (N,)
+        input (Tensor): Log probabilities of shape (N, C)
+        target (Tensor): Target class indices of shape (N,)
         reduction (str): 'none' | 'mean' | 'sum'
 
     Returns:
-        Variable: Loss value
+        Tensor: Loss value
     """
     return NLLLoss(reduction)(input, target) 

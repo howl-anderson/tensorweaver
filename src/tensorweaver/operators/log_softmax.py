@@ -1,6 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 class LogSoftmax(Function):
     def __init__(self, dim=-1):
@@ -40,10 +40,10 @@ def log_softmax(input, dim=-1):
     log_softmax(x)_i = (x_i - max_j(x_j)) - log(sum_j(exp(x_j - max_j(x_j))))
 
     Args:
-        input (Variable): Input tensor
+        input (Tensor): Input tensor
         dim (int, optional): Dimension to compute softmax over. Defaults to -1.
 
     Returns:
-        Variable: Result of log_softmax
+        Tensor: Result of log_softmax
     """
     return LogSoftmax(dim)(input)

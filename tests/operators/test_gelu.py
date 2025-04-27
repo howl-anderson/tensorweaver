@@ -1,13 +1,13 @@
 import numpy as np
 from numpy.testing import assert_allclose
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.gelu import gelu
 
 
 def test_basic_gelu():
     # Test basic GELU functionality
-    x = Variable(np.array([-2.0, -1.0, 0.0, 1.0, 2.0]))
+    x = Tensor(np.array([-2.0, -1.0, 0.0, 1.0, 2.0]))
     out = gelu(x)
     
     # GELU value at 0 should be 0
@@ -19,7 +19,7 @@ def test_basic_gelu():
 
 def test_gelu_accuracy():
     # Test GELU numerical accuracy
-    x = Variable(np.array([0.0, 1.0, -1.0]))
+    x = Tensor(np.array([0.0, 1.0, -1.0]))
     out = gelu(x)
     
     # These are exact values from pre-calculation
@@ -28,7 +28,7 @@ def test_gelu_accuracy():
 
 def test_gelu_gradient():
     # Test gradient calculation
-    x = Variable(np.array([1.0]))
+    x = Tensor(np.array([1.0]))
     out = gelu(x)
     out.backward()
     
@@ -36,7 +36,7 @@ def test_gelu_gradient():
     assert x.grad[0] > 1.0  # Gradient should be greater than 1
     
     # Test gradient at x=0
-    x = Variable(np.array([0.0]))
+    x = Tensor(np.array([0.0]))
     out = gelu(x)
     out.backward()
     # Gradient at x=0 should be 0.5
@@ -52,14 +52,14 @@ def test_gelu_shape_preservation():
     ]
     
     for shape in shapes:
-        x = Variable(np.random.randn(*shape))
+        x = Tensor(np.random.randn(*shape))
         out = gelu(x)
         assert out.data.shape == shape
 
 def test_gelu_numerical_stability():
     # Test numerical stability
     # Test large input values
-    x = Variable(np.array([1000.0, -1000.0]))
+    x = Tensor(np.array([1000.0, -1000.0]))
     out = gelu(x)
     assert not np.any(np.isnan(out.data))
     assert not np.any(np.isinf(out.data))
@@ -69,14 +69,14 @@ def test_gelu_numerical_stability():
     assert_allclose(out.data[1], 0.0, atol=1e-7)
     
     # Test small input values
-    x = Variable(np.array([1e-6, -1e-6]))
+    x = Tensor(np.array([1e-6, -1e-6]))
     out = gelu(x)
     assert not np.any(np.isnan(out.data))
     assert not np.any(np.isinf(out.data))
 
 def test_gelu_properties():
     # Test basic properties of GELU
-    x = Variable(np.linspace(-5, 5, 1000))
+    x = Tensor(np.linspace(-5, 5, 1000))
     out = gelu(x)
     
     # GELU should be positive in the positive region
@@ -97,7 +97,7 @@ def test_gelu_properties():
 
 def test_gelu_batch_gradient():
     # Test gradient calculation for batch data
-    x = Variable(np.random.randn(10, 5))
+    x = Tensor(np.random.randn(10, 5))
     out = gelu(x)
     out.backward(np.ones_like(out.data))
     

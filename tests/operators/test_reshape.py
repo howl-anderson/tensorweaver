@@ -1,11 +1,11 @@
 import numpy as np
 
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.reshape import reshape
 
 
 def test_reshape():
-    x = Variable([[1, 2, 3], [4, 5, 6]])
+    x = Tensor([[1, 2, 3], [4, 5, 6]])
 
     y = reshape(x, (6,))
 

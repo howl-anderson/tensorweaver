@@ -1,5 +1,5 @@
 import numpy as np
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.autodiff.function import Function
 from tensorweaver.autodiff.topological_sort import topological_sort
 
@@ -17,7 +17,7 @@ class DummyFunction(Function):
 def test_topological_sort_simple_chain():
     """Test topological sort with a simple chain of variables: a -> b -> c"""
     # Create a simple chain: a -> b -> c
-    a = Variable(1.0)
+    a = Tensor(1.0)
     dummy_fn1 = DummyFunction()
     b = dummy_fn1(a)
     dummy_fn2 = DummyFunction()
@@ -41,7 +41,7 @@ def test_topological_sort_diamond():
     #   b1  b2
     #    \ /
     #     c
-    a = Variable(1.0)
+    a = Tensor(1.0)
     dummy_fn1 = DummyFunction()
     b1 = dummy_fn1(a)
     dummy_fn2 = DummyFunction()

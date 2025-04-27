@@ -1,10 +1,10 @@
 import numpy as np
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.operators.sigmoid import sigmoid
 
 
 def test_sigmoid():
-    x = Variable(np.asarray(1))
+    x = Tensor(np.asarray(1))
 
     y = sigmoid(x)
 

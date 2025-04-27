@@ -1,5 +1,5 @@
 import numpy as np
-from tensorweaver.autodiff.variable import Variable
+from tensorweaver.autodiff.tensor import Tensor
 
 def randint(low=0, high=None, size=None, dtype=None):
     if dtype is None:
@@ -26,4 +26,4 @@ def randint(low=0, high=None, size=None, dtype=None):
     elif isinstance(size, int) and size < 0:
         raise ValueError(f"size cannot be negative")
             
-    return Variable(np.random.randint(low, high, size=size, dtype=dtype))
+    return Tensor(np.random.randint(low, high, size=size, dtype=dtype))
