@@ -1,5 +1,5 @@
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.helpers import as_variable
+from tensorweaver.autodiff.helpers import as_tensor
 
 import numpy as np
 
@@ -39,6 +39,6 @@ class SumTo(Function):
 
 def sum_to(x, shape):
     if x.shape == shape:
-        return as_variable(x)
+        return as_tensor(x)
     else:
         return SumTo(shape)(x)

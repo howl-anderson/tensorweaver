@@ -1,7 +1,7 @@
 import numpy as np
 
 from tensorweaver.autodiff.function import Function
-from tensorweaver.autodiff.helpers import as_variable
+from tensorweaver.autodiff.helpers import as_tensor
 
 
 class Reshape(Function):
@@ -22,6 +22,6 @@ class Reshape(Function):
 
 def reshape(x, shape):
     if x.shape == shape:
-        return as_variable(x)
+        return as_tensor(x)
     else:
         return Reshape(shape)(x)

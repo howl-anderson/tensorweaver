@@ -1,6 +1,6 @@
 import numpy as np
 
-from tensorweaver.autodiff.helpers import as_ndarray, as_variable
+from tensorweaver.autodiff.helpers import as_ndarray, as_tensor
 
 class Tensor:
     def __init__(self, data, name=None):
@@ -140,67 +140,67 @@ class Tensor:
         # lazy import to avoid import circle
         from tensorweaver.operators.add import add
 
-        return add(self, as_variable(other, self))
+        return add(self, as_tensor(other, self))
 
     def __radd__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.add import add
 
-        return add(as_variable(other, self), self)
+        return add(as_tensor(other, self), self)
 
     def __sub__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.sub import sub
 
-        return sub(self, as_variable(other, self))
+        return sub(self, as_tensor(other, self))
 
     def __rsub__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.sub import sub
 
-        return sub(as_variable(other, self), self)
+        return sub(as_tensor(other, self), self)
 
     def __mul__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.mul import mul
 
-        return mul(self, as_variable(other, self))
+        return mul(self, as_tensor(other, self))
 
     def __rmul__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.mul import mul
 
-        return mul(as_variable(other, self), self)
+        return mul(as_tensor(other, self), self)
 
     def __truediv__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.div import div
 
-        return div(self, as_variable(other, self))
+        return div(self, as_tensor(other, self))
 
     def __rtruediv__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.div import div
 
-        return div(as_variable(other, self), self)
+        return div(as_tensor(other, self), self)
 
     def __pow__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.power import power
 
-        return power(self, as_variable(other, self))
+        return power(self, as_tensor(other, self))
 
     def __rpow__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.power import power
 
-        return power(as_variable(other, self), self)
+        return power(as_tensor(other, self), self)
 
     def __matmul__(self, other):
         # lazy import to avoid import circle
         from tensorweaver.operators.matmul import matmul
 
-        return matmul(self, as_variable(other, self))
+        return matmul(self, as_tensor(other, self))
 
     def __neg__(self):
         # lazy import to avoid import circle
@@ -239,7 +239,7 @@ class Tensor:
         """
         # lazy import to avoid import circle
         from tensorweaver.operators.eq import eq
-        return eq(self, as_variable(other, self))
+        return eq(self, as_tensor(other, self))
 
     def view_as(self, other):
         """Reshape the tensor to have the same shape as another tensor.
@@ -310,7 +310,7 @@ class Tensor:
         # Ensure value is a scalar
         if isinstance(value, Tensor):
             value = value.data.item() if hasattr(value.data, 'item') else float(value.data)
-        return masked_fill(self, as_variable(mask), value)
+        return masked_fill(self, as_tensor(mask), value)
 
     def __getitem__(self, key):
         """Support for slice operations.
