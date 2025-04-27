@@ -1,6 +1,6 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class View(Function):
+class View(Operator):
     def __init__(self, *shape):
         super().__init__()
         self.shape = shape

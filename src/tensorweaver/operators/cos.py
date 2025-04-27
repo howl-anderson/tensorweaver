@@ -1,10 +1,10 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Cos(Function):
+class Cos(Operator):
     def forward(self, x: NDArray) -> NDArray:
         return np.cos(x)
 

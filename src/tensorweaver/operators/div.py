@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Div(Function):
+class Div(Operator):
     def forward(self, a, b):
         return a / b
 

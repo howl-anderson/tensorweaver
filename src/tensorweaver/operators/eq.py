@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Equal(Function):
+class Equal(Operator):
     def forward(self, x1, x2):
         return x1 == x2
 

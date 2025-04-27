@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class MaskedFill(Function):
+class MaskedFill(Operator):
     def __init__(self, value):
         super().__init__()
         self.value = value

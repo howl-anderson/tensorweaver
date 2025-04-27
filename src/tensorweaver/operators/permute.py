@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Permute(Function):
+class Permute(Operator):
     def __init__(self, dims):
         super().__init__()
         self.dims = dims

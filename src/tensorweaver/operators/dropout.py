@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Dropout(Function):
+class Dropout(Operator):
     def __init__(self, p=0.5):
         super().__init__()
 

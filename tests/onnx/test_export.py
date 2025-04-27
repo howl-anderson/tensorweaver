@@ -7,7 +7,7 @@ import tempfile
 import tensorweaver as tw
 from tensorweaver.onnx.onnx_program import export
 from tensorweaver.autodiff.tensor import Tensor
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.operators.add import Add
 from tensorweaver import Parameter
 
@@ -139,7 +139,7 @@ def test_simple_add():
     2. Input/output name mapping
     3. Verification of result correctness
     """
-    class SimpleAdd(Function):
+    class SimpleAdd(Operator):
         def __call__(self, x, y):
             return Add()(x, y)
     
@@ -172,7 +172,7 @@ def test_chain_add():
     2. Processing of intermediate results
     3. Correctness of topological sorting
     """
-    class ChainAdd(Function):
+    class ChainAdd(Operator):
         def __call__(self, a, b, c):
             temp = Add()(a, b)
             return Add()(temp, c)
@@ -210,7 +210,7 @@ def test_tree_add():
     3. Complex computational graph structure
     4. Processing of multiple intermediate results
     """
-    class TreeAdd(Function):
+    class TreeAdd(Operator):
         def __call__(self, a, b, c, d):
             left = Add()(a, b)
             right = Add()(c, d)
@@ -246,7 +246,7 @@ def test_diamond_add():
     3. Variable sharing in computational graph
     4. Correctness of topological sorting for repeated nodes
     """
-    class DiamondAdd(Function):
+    class DiamondAdd(Operator):
         def __call__(self, x, y):
             left = Add()(x, y)
             right = Add()(x, y)  # reuse x and y
@@ -282,7 +282,7 @@ def test_parameter_add():
     3. ONNX initializer handling
     4. Correct mapping of parameter names
     """
-    class ParameterAdd(Function):
+    class ParameterAdd(Operator):
         def __init__(self):
             super().__init__()
             self.param = Parameter(np.array([[1.0, 2.0]], dtype=np.float32))

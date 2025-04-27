@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from tensorweaver.autodiff.tensor import Tensor
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
 @pytest.mark.parametrize(
@@ -65,7 +65,7 @@ def test_div(a, b, expected):
     assert c.data == np.asarray(expected)
 
 
-class AddFunction(Function):
+class AddOperator(Operator):
     """A simple add function for testing backward propagation"""
     def forward(self, *inputs):
         x, y = inputs
@@ -75,7 +75,7 @@ class AddFunction(Function):
         return grad, grad
 
 
-class MulFunction(Function):
+class MulOperator(Operator):
     """A simple multiplication function for testing backward propagation"""
     def forward(self, *inputs):
         x, y = inputs
@@ -91,7 +91,7 @@ def test_backward_simple_add():
     # Create computation graph: z = x + y
     x = Tensor(2.0)
     y = Tensor(3.0)
-    add_fn = AddFunction()
+    add_fn = AddOperator()
     z = add_fn(x, y)
 
     # Backward pass
@@ -107,7 +107,7 @@ def test_backward_simple_multiply():
     # Create computation graph: z = x * y
     x = Tensor(2.0)
     y = Tensor(3.0)
-    mul_fn = MulFunction()
+    mul_fn = MulOperator()
     z = mul_fn(x, y)
 
     # Backward pass
@@ -127,11 +127,11 @@ def test_backward_diamond_shape():
     #    \ /
     #     +
     x = Tensor(2.0)
-    add_fn1 = AddFunction()
-    mul_fn = MulFunction()
+    add_fn1 = AddOperator()
+    mul_fn = MulOperator()
     path1 = add_fn1(x, Tensor(1.0))  # path1 = x + 1
     path2 = mul_fn(x, Tensor(2.0))   # path2 = x * 2
-    add_fn2 = AddFunction()
+    add_fn2 = AddOperator()
     result = add_fn2(path1, path2)     # result = (x + 1) + (x * 2)
 
     # Backward pass
@@ -145,7 +145,7 @@ def test_backward_clean_grad():
     """Test that clean_grad properly resets gradients"""
     x = Tensor(2.0)
     y = Tensor(3.0)
-    mul_fn = MulFunction()
+    mul_fn = MulOperator()
     z = mul_fn(x, y)
 
     # First backward pass

@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Exp(Function):
+class Exp(Operator):
     def forward(self, x):
         return np.exp(x)
 

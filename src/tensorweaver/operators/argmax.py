@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Argmax(Function):
+class Argmax(Operator):
     def __init__(self, dim=None, keepdim=False):
         super().__init__()
         self.dim = dim

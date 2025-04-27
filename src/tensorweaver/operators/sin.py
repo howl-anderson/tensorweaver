@@ -1,11 +1,11 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
 
-class Sin(Function):
+class Sin(Operator):
     def forward(self, x: NDArray) -> NDArray:
         return np.sin(x)
 

@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Sigmoid(Function):
+class Sigmoid(Operator):
     def forward(self, x):
         y = 1 / (1 + np.exp(-x))
         self.y = y  # Save output value for backpropagation

@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Neg(Function):
+class Neg(Operator):
     def forward(self, x):
         return -x
 

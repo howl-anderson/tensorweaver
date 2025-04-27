@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class GELU(Function):
+class GELU(Operator):
     def forward(self, input):
         # Calculate CDF (Cumulative Distribution Function) part
         inner = np.sqrt(2 / np.pi) * (input + 0.044715 * input ** 3)

@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Mul(Function):
+class Mul(Operator):
     def forward(self, a, b):
         return a * b
 

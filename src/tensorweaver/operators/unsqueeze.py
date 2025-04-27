@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Unsqueeze(Function):
+class Unsqueeze(Operator):
     def __init__(self, dim):
         super().__init__()
         self.dim = dim

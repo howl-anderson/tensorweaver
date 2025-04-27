@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Pow(Function):
+class Pow(Operator):
     def __init__(self, exponent):
         super().__init__()
         self.exponent = exponent

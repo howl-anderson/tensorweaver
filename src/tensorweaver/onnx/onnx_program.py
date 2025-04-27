@@ -12,7 +12,7 @@ from onnx.helper import (
     make_graph,
     make_tensor_value_info)
 
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.topological_sort import topological_sort
 from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.onnx.registry import registry
@@ -35,7 +35,7 @@ class GraphInfo:
     outputs: List[Tensor]
     parameters: List[Parameter]
     intermediate_tensors: List[Tensor]
-    functions: List[Function]
+    functions: List[Operator]
 
 def collect_graph_info(inputs: List[Tensor], output: Tensor) -> GraphInfo:
     """Collect information about all components in the computational graph.

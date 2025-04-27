@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class CrossEntropy(Function):
+class CrossEntropy(Operator):
     def __init__(self, ignore_index=-1):
         super().__init__()
         self.ignore_index = ignore_index

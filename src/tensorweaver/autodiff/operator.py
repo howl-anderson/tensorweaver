@@ -8,7 +8,7 @@ from typeguard import typechecked
 
 
 @typechecked
-class Function:
+class Operator:
     def __init__(self):
         self.inputs: List[Tensor] = []
         self.input_data: List[NDArray] = []

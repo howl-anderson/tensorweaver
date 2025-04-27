@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 import numpy as np
 
-class Embedding(Function):
+class Embedding(Operator):
     def __init__(self, padding_idx=None):
         super().__init__()
 

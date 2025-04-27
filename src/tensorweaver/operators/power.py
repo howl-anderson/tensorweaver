@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Power(Function):
+class Power(Operator):
     def forward(self, a, b):
         y = a ** b
         self.a = a

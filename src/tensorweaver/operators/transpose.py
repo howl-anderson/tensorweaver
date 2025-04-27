@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Transpose(Function):
+class Transpose(Operator):
     def __init__(self, dim0, dim1):
         super().__init__()
         self.dim0 = dim0

@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class Sqrt(Function):
+class Sqrt(Operator):
     def forward(self, a):
         return a * a
 

@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Tril(Function):
+class Tril(Operator):
     def __init__(self, diagonal=0):
         super().__init__()
         self.diagonal = diagonal

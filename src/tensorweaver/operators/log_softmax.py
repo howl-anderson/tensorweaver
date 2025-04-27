@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class LogSoftmax(Function):
+class LogSoftmax(Operator):
     def __init__(self, dim=-1):
         super().__init__()
         self.dim = dim

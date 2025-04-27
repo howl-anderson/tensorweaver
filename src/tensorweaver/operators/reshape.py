@@ -1,10 +1,10 @@
 import numpy as np
 
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.helpers import as_tensor
 
 
-class Reshape(Function):
+class Reshape(Operator):
     def __init__(self, target_shape):
         super().__init__()
 

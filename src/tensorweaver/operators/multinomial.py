@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class Multinomial(Function):
+class Multinomial(Operator):
     def __init__(self, num_samples):
         super().__init__()
         self.num_samples = num_samples

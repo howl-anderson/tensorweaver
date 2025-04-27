@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class Flatten(Function):
+class Flatten(Operator):
     def __init__(self, start_dim=0, end_dim=-1):
         super().__init__()
         self.start_dim = start_dim

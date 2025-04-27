@@ -1,7 +1,7 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 import numpy as np
 
-class Matmul(Function):
+class Matmul(Operator):
     def forward(self, a, b):
         return a @ b
 

@@ -1,7 +1,7 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Tanh(Function):
+class Tanh(Operator):
     def __init__(self):
         super().__init__()
         self.output = None

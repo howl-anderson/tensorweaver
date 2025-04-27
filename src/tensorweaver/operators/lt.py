@@ -1,6 +1,6 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
-class Lt(Function):
+class Lt(Operator):
     def forward(self, x1, x2):
         """
         Args:

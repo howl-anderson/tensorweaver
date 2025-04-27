@@ -1,10 +1,10 @@
 import numpy as np
 from tensorweaver.autodiff.tensor import Tensor
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.topological_sort import topological_sort
 
 
-class DummyFunction(Function):
+class DummyOperator(Operator):
     """A dummy function for testing topological sort"""
     def forward(self, *inputs):
         # Return a new numpy array instead of the input directly
@@ -18,9 +18,9 @@ def test_topological_sort_simple_chain():
     """Test topological sort with a simple chain of variables: a -> b -> c"""
     # Create a simple chain: a -> b -> c
     a = Tensor(1.0)
-    dummy_fn1 = DummyFunction()
+    dummy_fn1 = DummyOperator()
     b = dummy_fn1(a)
-    dummy_fn2 = DummyFunction()
+    dummy_fn2 = DummyOperator()
     c = dummy_fn2(b)
 
     # Get topological order starting from c
@@ -42,11 +42,11 @@ def test_topological_sort_diamond():
     #    \ /
     #     c
     a = Tensor(1.0)
-    dummy_fn1 = DummyFunction()
+    dummy_fn1 = DummyOperator()
     b1 = dummy_fn1(a)
-    dummy_fn2 = DummyFunction()
+    dummy_fn2 = DummyOperator()
     b2 = dummy_fn2(a)
-    dummy_fn3 = DummyFunction()
+    dummy_fn3 = DummyOperator()
     c = dummy_fn3(b1, b2)
 
     # Get topological order starting from c

@@ -1,9 +1,9 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 from tensorweaver.operators.sum_to import np_sum_to
 
 
-class Add(Function):
+class Add(Operator):
     def forward(self, a, b):
         self.shape_a = a.shape
         self.shape_b = b.shape

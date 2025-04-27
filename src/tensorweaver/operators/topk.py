@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class TopK(Function):
+class TopK(Operator):
     def __init__(self, k):
         super().__init__()
         self.k = k

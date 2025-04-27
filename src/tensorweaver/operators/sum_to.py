@@ -1,4 +1,4 @@
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.helpers import as_tensor
 
 import numpy as np
@@ -21,7 +21,7 @@ def np_sum_to(x, shape):
     return y
 
 
-class SumTo(Function):
+class SumTo(Operator):
     def __init__(self, target_shape):
         super().__init__()
 

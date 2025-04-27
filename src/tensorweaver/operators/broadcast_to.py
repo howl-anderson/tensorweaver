@@ -1,9 +1,9 @@
 import numpy as np
 
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 
 
-class BroadcastTo(Function):
+class BroadcastTo(Operator):
     def __init__(self, target_shape):
         super().__init__()
         self.target_shape = target_shape

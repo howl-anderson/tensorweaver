@@ -1,8 +1,8 @@
 import numpy as np
-from tensorweaver.autodiff.function import Function
+from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
-class Mean(Function):
+class Mean(Operator):
     def __init__(self, axis=None, keepdims=False):
         """Mean operator that computes the mean value over specified dimensions.
         
