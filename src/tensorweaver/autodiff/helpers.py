@@ -2,6 +2,11 @@ from numpy.typing import NDArray
 
 import numpy as np
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from tensorweaver.autodiff.tensor import Tensor
+
 
 def as_ndarray(x, like_to : NDArray = None) -> NDArray:
     if not isinstance(x, np.ndarray):
@@ -13,7 +18,7 @@ def as_ndarray(x, like_to : NDArray = None) -> NDArray:
     return x
 
 
-def as_variable(x, like_to: "Variable" = None) -> "Variable":
+def as_variable(x, like_to: "Tensor" = None) -> "Tensor":
     # lazy load to avoid import circle
     from tensorweaver.autodiff.tensor import Tensor
 
