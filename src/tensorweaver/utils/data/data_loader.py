@@ -1,5 +1,7 @@
 # simple_dataloader.py
 import random
+from tensorweaver.autodiff.tensor import Tensor
+import numpy as np
 from typing import Iterable, Callable, List, Any
 
 
@@ -10,7 +12,11 @@ def default_collate(batch: List[Any]):
     if isinstance(elem, (tuple, list)):
         transposed = zip(*batch)  # Reorganize by position
         return [default_collate(samples) for samples in transposed]
-    return batch  # Return scalar / Tensor directly
+    if isinstance(elem, (np.ndarray, float, int)):
+        return Tensor(np.array(batch))
+    if isinstance(elem, Tensor):
+        return Tensor(np.stack([x.data for x in batch]))
+    return batch  # Return other types directly
 
 
 class DataLoader(Iterable):

@@ -45,3 +45,4 @@ from tensorweaver.operators.lt import lt
 from tensorweaver.operators.masked_fill import masked_fill
 from tensorweaver.operators.multinomial import multinomial
 from tensorweaver.operators.cat import cat
+from tensorweaver.operators.softmax import softmax

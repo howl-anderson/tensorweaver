@@ -2,7 +2,7 @@ import numpy as np
 from tensorweaver.autodiff.operator import Operator
 
 
-class Relu(Operator):
+class ReLU(Operator):
     def __init__(self):
         super().__init__()
 
@@ -16,4 +16,4 @@ class Relu(Operator):
 
 
 def relu(x):
-    return Relu()(x)
+    return ReLU()(x)

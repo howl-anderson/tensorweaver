@@ -2,6 +2,7 @@ import pytest
 from tensorweaver.utils.data.dataset import Dataset
 from tensorweaver.utils.data.tensor_dataset import TensorDataset
 from tensorweaver.utils.data.data_loader import DataLoader
+from tensorweaver.autodiff.tensor import Tensor
 import numpy as np  # Assuming tensors are numpy arrays for testing
 
 
@@ -54,11 +55,12 @@ def test_dataloader_iteration_batch_size_1():
     dataloader = DataLoader(dataset, batch_size=1)
     batches = list(dataloader)
     assert len(batches) == 5
-    assert batches[0] == [1]
-    assert batches[1] == [2]
-    assert batches[2] == [3]
-    assert batches[3] == [4]
-    assert batches[4] == [5]
+    assert isinstance(batches[0], Tensor)
+    assert np.array_equal(batches[0].data, np.array([1]))
+    assert np.array_equal(batches[1].data, np.array([2]))
+    assert np.array_equal(batches[2].data, np.array([3]))
+    assert np.array_equal(batches[3].data, np.array([4]))
+    assert np.array_equal(batches[4].data, np.array([5]))
 
 
 def test_dataloader_iteration_batch_size_2():
@@ -67,9 +69,10 @@ def test_dataloader_iteration_batch_size_2():
     dataloader = DataLoader(dataset, batch_size=2)
     batches = list(dataloader)
     assert len(batches) == 3
-    assert batches[0] == [1, 2]
-    assert batches[1] == [3, 4]
-    assert batches[2] == [5]
+    assert isinstance(batches[0], Tensor)
+    assert np.array_equal(batches[0].data, np.array([1, 2]))
+    assert np.array_equal(batches[1].data, np.array([3, 4]))
+    assert np.array_equal(batches[2].data, np.array([5]))
 
 
 def test_dataloader_drop_last():
@@ -78,8 +81,9 @@ def test_dataloader_drop_last():
     dataloader = DataLoader(dataset, batch_size=2, drop_last=True)
     batches = list(dataloader)
     assert len(batches) == 2
-    assert batches[0] == [1, 2]
-    assert batches[1] == [3, 4]
+    assert isinstance(batches[0], Tensor)
+    assert np.array_equal(batches[0].data, np.array([1, 2]))
+    assert np.array_equal(batches[1].data, np.array([3, 4]))
     assert len(dataloader) == 2
 
 
@@ -92,8 +96,9 @@ def test_dataloader_shuffle():
 
     all_yielded_items = []
     for batch in dataloader:
-        assert len(batch) <= 3
-        all_yielded_items.extend(batch)
+        assert isinstance(batch, Tensor)
+        assert len(batch.data) <= 3
+        all_yielded_items.extend(batch.data.tolist())
 
     assert len(all_yielded_items) == 10
     assert sorted(all_yielded_items) == data  # Ensure all elements are iterated through
@@ -111,17 +116,19 @@ def test_dataloader_collate_fn():
 
     batch1 = batches[0]
     assert isinstance(batch1, list)
-    assert (
-        len(batch1) == 2
-    )  # dataset returns a tuple, after collate it should be a list of tensors
-    assert np.array_equal(batch1[0], np.array([[1, 2], [3, 4]]))
-    assert np.array_equal(batch1[1], np.array([[9, 10], [11, 12]]))
+    assert len(batch1) == 2  # dataset returns a tuple, after collate it should be a list of tensors
+    assert isinstance(batch1[0], Tensor)
+    assert isinstance(batch1[1], Tensor)
+    assert np.array_equal(batch1[0].data, np.array([[1, 2], [3, 4]]))
+    assert np.array_equal(batch1[1].data, np.array([[9, 10], [11, 12]]))
 
     batch2 = batches[1]
     assert isinstance(batch2, list)
     assert len(batch2) == 2
-    assert np.array_equal(batch2[0], np.array([[5, 6], [7, 8]]))
-    assert np.array_equal(batch2[1], np.array([[13, 14], [15, 16]]))
+    assert isinstance(batch2[0], Tensor)
+    assert isinstance(batch2[1], Tensor)
+    assert np.array_equal(batch2[0].data, np.array([[5, 6], [7, 8]]))
+    assert np.array_equal(batch2[1].data, np.array([[13, 14], [15, 16]]))
 
 
 def test_dataloader_len():

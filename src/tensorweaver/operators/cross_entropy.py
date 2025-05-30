@@ -1,5 +1,6 @@
 import numpy as np
 from tensorweaver.autodiff.operator import Operator
+from tensorweaver.autodiff.tensor import Tensor
 
 
 class CrossEntropy(Operator):
@@ -19,10 +20,13 @@ class CrossEntropy(Operator):
             scalar loss value
         """
         self.input = input
-        self.target = target
+        # Convert target to numpy array if it's a Tensor
+        if isinstance(target, Tensor):
+            target = target.data
+        self.target = target.astype(np.int64)  # Ensure target is integer type
 
         # Create mask for ignored indices
-        self.mask = target != self.ignore_index
+        self.mask = self.target != self.ignore_index
 
         # Compute log softmax
         max_val = np.max(input, axis=1, keepdims=True)
@@ -36,7 +40,7 @@ class CrossEntropy(Operator):
             return np.array(0.0)
 
         batch_size = input.shape[0]
-        gathered_logits = log_probs[np.arange(batch_size), target]
+        gathered_logits = log_probs[np.arange(batch_size), self.target]
         gathered_logits = gathered_logits[self.mask]
 
         return -np.mean(gathered_logits)
