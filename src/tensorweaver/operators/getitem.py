@@ -23,12 +23,12 @@ class GetItem(Operator):
 
 def getitem(x, key):
     """Implements slice operations for tensors.
-    
+
     Args:
         x (Variable): Input tensor
         key: Slice index, can be an integer, slice object, or tuple
-        
+
     Returns:
         Variable: Sliced tensor
     """
-    return GetItem(key)(x) 
+    return GetItem(key)(x)

@@ -29,13 +29,13 @@ class Argmax(Operator):
 
 def argmax(x, dim=None, keepdim=False):
     """Returns the indices of the maximum values along the specified dimension.
-    
+
     Args:
         x (Variable): Input tensor.
         dim (int, optional): Dimension to reduce. Default is None, indicating to return the index of the maximum value in the entire tensor.
         keepdim (bool, optional): Whether to keep the output with the same dimensions as the input. Default is False.
-    
+
     Returns:
         Variable: A Variable object containing the indices of maximum values.
     """
-    return Argmax(dim=dim, keepdim=keepdim)(x) 
+    return Argmax(dim=dim, keepdim=keepdim)(x)

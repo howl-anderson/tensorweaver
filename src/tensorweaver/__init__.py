@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 
+
 @contextmanager
 def no_grad():
     """Context manager to temporarily disable gradient computation."""
@@ -10,6 +11,7 @@ def no_grad():
         # TODO: Restore gradient computation
         pass
 
+
 from tensorweaver import nn
 from tensorweaver import autograd
 from tensorweaver import optim
@@ -18,8 +20,10 @@ from tensorweaver import onnx
 from tensorweaver.autodiff.tensor import Tensor
 from tensorweaver.parameter import Parameter
 
+
 def tensor(data):
     return Tensor(data)
+
 
 from tensorweaver.operators.faltten import flatten
 from tensorweaver.operators.tanh import tanh

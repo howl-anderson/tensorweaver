@@ -204,12 +204,12 @@ class ONNXProgram:
         # Opset 21 is compatible with IR version 10 (introduced in ONNX 1.16.0).
         # For now, let's target IR version 10.
         target_ir_version = 10
-        current_opset_version = 21 # As per your current code
+        current_opset_version = 21  # As per your current code
 
         onnx_model = helper.make_model(
             onnx_graph,
             opset_imports=[helper.make_opsetid("", current_opset_version)],
-            ir_version=target_ir_version  # Explicitly set IR version
+            ir_version=target_ir_version,  # Explicitly set IR version
         )
 
         instance = cls(onnx_model)

@@ -26,19 +26,19 @@ class Sum(Operator):
         # If we need to restore dimensions during backpropagation
         if not self.keepdim and self.dim is not None:
             grad = np.expand_dims(grad, self.dim)
-        
+
         # Broadcast gradient to input shape
         return np.broadcast_to(grad, self.input_shape)
 
 
 def sum(x, dim=None, keepdim=False):
     """Calculate the sum of a tensor along the specified dimension.
-    
+
     Args:
         x (Tensor): Input tensor.
         dim (int, optional): Dimension to reduce. Default is None, meaning compute the sum of all elements.
         keepdim (bool, optional): Whether to keep the output with the same dimensions as the input. Default is False.
-    
+
     Returns:
         Tensor: Tensor after summation.
     """

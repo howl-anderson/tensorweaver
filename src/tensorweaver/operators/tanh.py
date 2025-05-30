@@ -1,6 +1,7 @@
 import numpy as np
 from tensorweaver.autodiff.operator import Operator
 
+
 class Tanh(Operator):
     def __init__(self):
         super().__init__()
@@ -14,13 +15,14 @@ class Tanh(Operator):
         # Derivative of tanh(x) is 1 - tanh^2(x)
         return grad_output * (1 - self.output * self.output)
 
+
 def tanh(x):
     """
     Applies the hyperbolic tangent function element-wise.
-    
+
     Args:
         x (Variable): Input tensor
-    
+
     Returns:
         Variable: Output tensor with tanh applied
     """

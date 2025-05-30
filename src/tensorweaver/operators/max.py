@@ -16,7 +16,7 @@ class Max(Operator):
     def backward(self, g):
         x = self.input_data[0]
         mask = np.zeros_like(x)
-        
+
         if self.axis is None:
             # Global maximum
             idx = np.unravel_index(np.argmax(x), x.shape)
@@ -25,19 +25,19 @@ class Max(Operator):
             # Maximum along specific axis
             if not isinstance(g, np.ndarray):
                 g = np.array(g)
-            
+
             # Get indices of maximum values along the specific axis
             max_vals = np.max(x, axis=self.axis, keepdims=True)
-            
+
             # Create a boolean mask for maximum positions
-            mask_bool = (x == max_vals)
-            
+            mask_bool = x == max_vals
+
             # Reshape gradient to match the reduced shape with keepdims=True
             g = np.expand_dims(g, axis=self.axis)
-            
+
             # Apply gradient where mask is True
             mask = mask_bool * g
-            
+
         return mask
 
 

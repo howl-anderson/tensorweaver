@@ -10,13 +10,13 @@ class SGD(Optimizer):
 
     def update_one_parameter(self, p):
         """Update a single parameter.
-        
+
         Args:
             p (Variable): Parameter to update
         """
         if p.grad is None:
             return
-            
+
         # If the gradient has more dimensions than the parameter,
         # we need to sum over the extra dimensions
         if p.grad.ndim > p.data.ndim:
@@ -25,10 +25,10 @@ class SGD(Optimizer):
             grad = np.add.reduce(p.grad, axis=axes)
         else:
             grad = p.grad
-            
+
         # Update the parameter in-place
         np.subtract(p.data, self.learning_rate * grad, out=p.data)
-        
+
         # Clean up gradients and force deallocation
         p.clean_grad()
         del grad  # Explicitly delete the temporary gradient

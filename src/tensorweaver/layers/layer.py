@@ -50,7 +50,7 @@ class Layer:
 
     def state_dict(self):
         """Mock implementation of state_dict to make it compatible with PyTorch-style saving.
-        
+
         Returns:
             dict: A dictionary containing a whole state of the module
         """

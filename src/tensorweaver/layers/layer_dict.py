@@ -1,4 +1,4 @@
 from collections import UserDict
 
-class LayerDict(UserDict):
-    ...
+
+class LayerDict(UserDict): ...

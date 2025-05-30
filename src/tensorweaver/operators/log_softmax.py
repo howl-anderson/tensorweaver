@@ -2,6 +2,7 @@ import numpy as np
 from tensorweaver.autodiff.operator import Operator
 from tensorweaver.autodiff.tensor import Tensor
 
+
 class LogSoftmax(Operator):
     def __init__(self, dim=-1):
         super().__init__()
@@ -13,10 +14,10 @@ class LogSoftmax(Operator):
         x_max = x.max(axis=self.dim, keepdims=True)
         exp_x = np.exp(x - x_max)
         sum_exp_x = exp_x.sum(axis=self.dim, keepdims=True)
-        
+
         # Save softmax output for backpropagation
         self.softmax_output = exp_x / sum_exp_x
-        
+
         # log_softmax = log(softmax) = x - x_max - log(sum(exp(x - x_max)))
         return (x - x_max) - np.log(sum_exp_x)
 
@@ -28,7 +29,10 @@ class LogSoftmax(Operator):
         """
         # grad_output has the same shape as the forward output
         # softmax_output is already calculated and saved in forward
-        return grad_output - (self.softmax_output * grad_output.sum(axis=self.dim, keepdims=True))
+        return grad_output - (
+            self.softmax_output * grad_output.sum(axis=self.dim, keepdims=True)
+        )
+
 
 def log_softmax(input, dim=-1):
     """Calculate log_softmax of the input tensor.

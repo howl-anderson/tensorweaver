@@ -1,6 +1,7 @@
 from tensorweaver.autodiff.operator import Operator
 import numpy as np
 
+
 class Matmul(Operator):
     def forward(self, a, b):
         return a @ b
@@ -19,6 +20,7 @@ class Matmul(Operator):
         ga = gy @ b.T
         gb = a.T @ gy
         return ga, gb
+
 
 def matmul(x, y):
     return Matmul()(x, y)

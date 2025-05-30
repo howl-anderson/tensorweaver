@@ -10,5 +10,6 @@ class Mul(Operator):
 
         return b * gy, a * gy
 
+
 def mul(x, y):
     return Mul()(x, y)

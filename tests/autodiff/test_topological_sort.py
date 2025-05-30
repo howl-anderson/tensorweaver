@@ -6,6 +6,7 @@ from tensorweaver.autodiff.topological_sort import topological_sort
 
 class DummyOperator(Operator):
     """A dummy function for testing topological sort"""
+
     def forward(self, *inputs):
         # Return a new numpy array instead of the input directly
         return np.array(inputs[0])
@@ -57,4 +58,4 @@ def test_topological_sort_diamond():
     assert sorted_vars[0] is c  # c should be first
     assert sorted_vars[-1] is a  # a should be last
     # b1 and b2 can be in any order, but should be between c and a
-    assert {sorted_vars[1], sorted_vars[2]} == {b1, b2} 
+    assert {sorted_vars[1], sorted_vars[2]} == {b1, b2}

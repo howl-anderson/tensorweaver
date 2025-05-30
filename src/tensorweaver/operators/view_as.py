@@ -18,16 +18,16 @@ class ViewAs(Operator):
 
 def view_as(x, other):
     """Reshape the tensor to have the same shape as another tensor.
-    
+
     Args:
         x (Variable): Tensor to be reshaped.
         other (Variable): Tensor with the target shape.
-    
+
     Returns:
         Variable: Reshaped tensor.
     """
-    if hasattr(other, 'data'):
+    if hasattr(other, "data"):
         target_shape = other.data.shape
     else:
         target_shape = np.array(other).shape
-    return ViewAs(target_shape)(x) 
+    return ViewAs(target_shape)(x)

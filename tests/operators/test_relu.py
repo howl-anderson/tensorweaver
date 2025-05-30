@@ -26,7 +26,7 @@ def test_relu_forward_array():
     """Test ReLU forward pass with array inputs"""
     x = Tensor(np.array([-2.0, -1.0, 0.0, 1.0, 2.0]))
     y = relu(x)
-    
+
     expected = np.array([0.0, 0.0, 0.0, 1.0, 2.0])
     assert np.array_equal(y.data, expected)
 
@@ -57,30 +57,26 @@ def test_relu_backward_array():
     x = Tensor(np.array([-2.0, -1.0, 0.0, 1.0, 2.0]))
     y = relu(x)
     y.backward()
-    
+
     expected_grad = np.array([0.0, 0.0, 0.0, 1.0, 1.0])
     assert np.array_equal(x.grad, expected_grad)
 
 
 def test_relu_2d_array():
     """Test ReLU with 2D arrays"""
-    x_data = np.array([[-1.0, 2.0, -3.0],
-                      [4.0, -5.0, 6.0]])
+    x_data = np.array([[-1.0, 2.0, -3.0], [4.0, -5.0, 6.0]])
     x = Tensor(x_data)
     y = relu(x)
-    
+
     # Test forward pass
-    expected = np.array([[0.0, 2.0, 0.0],
-                        [4.0, 0.0, 6.0]])
+    expected = np.array([[0.0, 2.0, 0.0], [4.0, 0.0, 6.0]])
     assert np.array_equal(y.data, expected)
-    
+
     # Test backward pass with non-uniform gradient
-    upstream_grad = np.array([[1.0, 2.0, 3.0],
-                            [4.0, 5.0, 6.0]])
+    upstream_grad = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
     y.backward(upstream_grad)
-    
-    expected_grad = np.array([[0.0, 2.0, 0.0],
-                            [4.0, 0.0, 6.0]])
+
+    expected_grad = np.array([[0.0, 2.0, 0.0], [4.0, 0.0, 6.0]])
     assert np.array_equal(x.grad, expected_grad)
 
 
@@ -89,12 +85,12 @@ def test_relu_chain():
     x = Tensor(np.array([-2.0, -1.0, 0.0, 1.0, 2.0]))
     h = relu(x)  # First ReLU
     y = relu(h)  # Second ReLU
-    
+
     # Test forward pass
     expected = np.array([0.0, 0.0, 0.0, 1.0, 2.0])
     assert np.array_equal(y.data, expected)
-    
+
     # Test backward pass
     y.backward()
     expected_grad = np.array([0.0, 0.0, 0.0, 1.0, 1.0])
-    assert np.array_equal(x.grad, expected_grad) 
+    assert np.array_equal(x.grad, expected_grad)

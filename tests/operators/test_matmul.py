@@ -34,14 +34,14 @@ def test_matmul_forward():
     c = matmul(a, b)
     expected = np.array([[19, 22], [43, 50]])
     assert np.allclose(c.data, expected)
-    
+
     # Test matrix-vector multiplication
     a = Tensor(np.array([[1, 2], [3, 4]]))
     b = Tensor(np.array([5, 6]))
     c = matmul(a, b)
     expected = np.array([17, 39])
     assert np.allclose(c.data, expected)
-    
+
     # Test batch matrix multiplication
     batch_a = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
     batch_b = [[[5, 6], [7, 8]], [[9, 10], [11, 12]]]
@@ -54,43 +54,43 @@ def test_matmul_forward():
 
 def test_matmul_backward():
     # Test gradient computation for matrix multiplication
-    a = Tensor(np.array([[1., 2.], [3., 4.]]))
-    b = Tensor(np.array([[5., 6.], [7., 8.]]))
+    a = Tensor(np.array([[1.0, 2.0], [3.0, 4.0]]))
+    b = Tensor(np.array([[5.0, 6.0], [7.0, 8.0]]))
     c = matmul(a, b)
     c.backward(np.ones_like(c.data))
-    
+
     # Verify gradients
-    assert np.allclose(a.grad, np.array([[11., 15.], [11., 15.]]))
-    assert np.allclose(b.grad, np.array([[4., 4.], [6., 6.]]))
-    
+    assert np.allclose(a.grad, np.array([[11.0, 15.0], [11.0, 15.0]]))
+    assert np.allclose(b.grad, np.array([[4.0, 4.0], [6.0, 6.0]]))
+
     # Test gradient computation with scalar gradient
-    a = Tensor(np.array([[1., 2.], [3., 4.]]))
-    b = Tensor(np.array([[5., 6.], [7., 8.]]))
+    a = Tensor(np.array([[1.0, 2.0], [3.0, 4.0]]))
+    b = Tensor(np.array([[5.0, 6.0], [7.0, 8.0]]))
     c = matmul(a, b)
     c.backward()  # Uses gradient of ones
-    
-    assert np.allclose(a.grad, np.array([[11., 15.], [11., 15.]]))
-    assert np.allclose(b.grad, np.array([[4., 4.], [6., 6.]]))
+
+    assert np.allclose(a.grad, np.array([[11.0, 15.0], [11.0, 15.0]]))
+    assert np.allclose(b.grad, np.array([[4.0, 4.0], [6.0, 6.0]]))
 
 
 def test_matmul_shape_validation():
     # Test invalid shapes
     a = Tensor(np.array([[1, 2, 3], [4, 5, 6]]))  # 2x3
     b = Tensor(np.array([[1, 2], [3, 4], [5, 6], [7, 8]]))  # 4x2
-    
+
     with pytest.raises(ValueError):
         c = matmul(a, b)  # Should fail: 3 != 4
 
 
 def test_matmul_vector_cases():
     # Test vector-vector multiplication (inner product)
-    a = Tensor(np.array([1., 2., 3.]))
-    b = Tensor(np.array([4., 5., 6.]))
+    a = Tensor(np.array([1.0, 2.0, 3.0]))
+    b = Tensor(np.array([4.0, 5.0, 6.0]))
     c = matmul(a, b)
     assert np.isscalar(c.data) or c.data.ndim == 0
-    assert np.allclose(c.data, 32.)
-    
+    assert np.allclose(c.data, 32.0)
+
     # Test gradient for vector-vector case
     c.backward()
-    assert np.allclose(a.grad, np.array([4., 5., 6.]))
-    assert np.allclose(b.grad, np.array([1., 2., 3.]))
+    assert np.allclose(a.grad, np.array([4.0, 5.0, 6.0]))
+    assert np.allclose(b.grad, np.array([1.0, 2.0, 3.0]))

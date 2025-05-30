@@ -12,6 +12,7 @@ def test_basic_softmax():
     expected = np.array([[0.09003057, 0.24472847, 0.66524096]])
     assert_allclose(out.data, expected, rtol=1e-6)
 
+
 def test_softmax_numerical_stability():
     # Test numerical stability - large numbers
     x = Tensor(np.array([[1000.0, 2000.0, 3000.0]]))
@@ -26,18 +27,20 @@ def test_softmax_numerical_stability():
     assert_allclose(out.data[0, 0], 1.0, rtol=1e-6)
     assert np.all(out.data[0, 1:] < 1e-10)
 
+
 def test_softmax_edge_cases():
     # Test zero vector
     x = Tensor(np.array([[0.0, 0.0, 0.0]]))
     out = softmax(x)
-    expected = np.array([[1/3, 1/3, 1/3]])
+    expected = np.array([[1 / 3, 1 / 3, 1 / 3]])
     assert_allclose(out.data, expected, rtol=1e-6)
 
     # Test vector with identical values
     x = Tensor(np.array([[2.0, 2.0, 2.0]]))
     out = softmax(x)
-    expected = np.array([[1/3, 1/3, 1/3]])
+    expected = np.array([[1 / 3, 1 / 3, 1 / 3]])
     assert_allclose(out.data, expected, rtol=1e-6)
+
 
 def test_softmax_shape():
     # Test inputs with different shapes
@@ -46,6 +49,7 @@ def test_softmax_shape():
     assert out.data.shape == (2, 3)
     # Verify that each row sums to 1
     assert_allclose(np.sum(out.data, axis=1), np.array([1.0, 1.0]), rtol=1e-6)
+
 
 def test_softmax_gradient():
     # Test gradient calculation
@@ -67,4 +71,4 @@ def test_softmax_gradient():
     print(f"Actual grad: {x.grad}")
     print(f"Expected grad: {expected_grad}")
 
-    assert_allclose(x.grad, expected_grad, rtol=1e-6, atol=1e-7) 
+    assert_allclose(x.grad, expected_grad, rtol=1e-6, atol=1e-7)

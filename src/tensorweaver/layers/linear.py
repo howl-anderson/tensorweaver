@@ -5,7 +5,9 @@ from tensorweaver.parameter import Parameter
 
 
 class Linear(Layer):
-    def __init__(self, in_features: int, out_features: int, bias: bool = True, dtype=None):
+    def __init__(
+        self, in_features: int, out_features: int, bias: bool = True, dtype=None
+    ):
         super().__init__()
 
         self.out_dim = out_features
@@ -23,7 +25,9 @@ class Linear(Layer):
 
         self.bias = None
         if self.use_bias:
-            self.bias = Parameter(np.zeros(self.out_dim), name="bias")  # Initialize bias to zeros
+            self.bias = Parameter(
+                np.zeros(self.out_dim), name="bias"
+            )  # Initialize bias to zeros
 
     def forward(self, x):
         output = x @ self.weight

@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from tensorweaver.autodiff.tensor import Tensor
 
 
-def as_ndarray(x, like_to : NDArray = None) -> NDArray:
+def as_ndarray(x, like_to: NDArray = None) -> NDArray:
     if not isinstance(x, np.ndarray):
         x = np.asarray(x)
 

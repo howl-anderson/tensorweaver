@@ -67,6 +67,7 @@ def test_div(a, b, expected):
 
 class AddOperator(Operator):
     """A simple add function for testing backward propagation"""
+
     def forward(self, *inputs):
         x, y = inputs
         return np.array(x) + np.array(y)
@@ -77,6 +78,7 @@ class AddOperator(Operator):
 
 class MulOperator(Operator):
     """A simple multiplication function for testing backward propagation"""
+
     def forward(self, *inputs):
         x, y = inputs
         self._x, self._y = x, y
@@ -130,9 +132,9 @@ def test_backward_diamond_shape():
     add_fn1 = AddOperator()
     mul_fn = MulOperator()
     path1 = add_fn1(x, Tensor(1.0))  # path1 = x + 1
-    path2 = mul_fn(x, Tensor(2.0))   # path2 = x * 2
+    path2 = mul_fn(x, Tensor(2.0))  # path2 = x * 2
     add_fn2 = AddOperator()
-    result = add_fn2(path1, path2)     # result = (x + 1) + (x * 2)
+    result = add_fn2(path1, path2)  # result = (x + 1) + (x * 2)
 
     # Backward pass
     result.backward()

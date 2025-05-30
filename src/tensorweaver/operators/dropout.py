@@ -1,6 +1,7 @@
 import numpy as np
 from tensorweaver.autodiff.operator import Operator
 
+
 class Dropout(Operator):
     def __init__(self, p=0.5):
         super().__init__()
@@ -12,13 +13,16 @@ class Dropout(Operator):
     def forward(self, input):
         if self.training:
             self.mask = np.random.rand(*input.shape) > self.p
-            return input * self.mask / (1 - self.p)  # Scale to keep the expected value unchanged
+            return (
+                input * self.mask / (1 - self.p)
+            )  # Scale to keep the expected value unchanged
         return input
-    
+
     def backward(self, grad_output):
         if self.training:
             return grad_output * self.mask / (1 - self.p)
         return grad_output
+
 
 def dropout(input, p=0.5, training=True):
     dropout_layer = Dropout(p)

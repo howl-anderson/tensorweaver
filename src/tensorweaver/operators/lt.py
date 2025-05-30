@@ -1,5 +1,6 @@
 from tensorweaver.autodiff.operator import Operator
 
+
 class Lt(Operator):
     def forward(self, x1, x2):
         """
@@ -10,7 +11,7 @@ class Lt(Operator):
             output: boolean tensor where True if x1 < x2
         """
         return x1 < x2
-        
+
     def backward(self, grad_output):
         """
         Backward pass for less than operation.
@@ -19,15 +20,16 @@ class Lt(Operator):
         """
         return None, None
 
+
 def lt(x1, x2):
     """
     Element-wise less than comparison.
-    
+
     Args:
         x1 (Variable): first input tensor
         x2 (Variable): second input tensor
-        
+
     Returns:
         Variable: boolean tensor where True if x1 < x2
     """
-    return Lt()(x1, x2) 
+    return Lt()(x1, x2)
