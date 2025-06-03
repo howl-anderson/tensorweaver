@@ -1,5 +1,8 @@
 # TensorWeaver
 
+![CI](https://github.com/howl-anderson/tensorweaver/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/gh/howl-anderson/tensorweaver/branch/main/graph/badge.svg)](https://codecov.io/gh/howl-anderson/tensorweaver)
+
 <p align="center">
   <img src="docs/assets/logo.png" alt="TensorWeaver Logo" width="200"/>
 </p>
