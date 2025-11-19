@@ -1,6 +1,6 @@
 [project]
 name = "tensorweaver"
-version = "0.0.3"
+version = "0.0.4"
 description = "A modern educational deep learning framework for students, engineers and researchers"
 authors = [
     {name = "Xiaoquan Kong",email = "u1mail2me@gmail.com"}
