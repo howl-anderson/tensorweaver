@@ -67,3 +67,13 @@ markers = [
     "unit: mark a test as a unit test",
     "integration: mark a test as an integration test",
 ]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+version_files = [
+    "pyproject.toml:version"
+]
+tag_format = "v$version"
+update_changelog_on_bump = true
+major_version_zero = true
