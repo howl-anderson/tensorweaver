@@ -1,20 +1,16 @@
 format:
-	poetry run black src/tensorweaver/
-	poetry run black tests/
+	uv run black src/tensorweaver/
+	uv run black tests/
 
 test:
-	poetry run pytest tests/
+	uv run pytest tests/
 
 test-coverage:
-	poetry run pytest --cov=tensorweaver tests/ --cov-report=html
+	uv run pytest --cov=tensorweaver tests/ --cov-report=html
 
 package:
-	poetry build
+	uv build
 
 publish:
-	# poetry config pypi-token.pypi <token>
-	poetry publish --build
-
-export-requirements:
-	poetry self add poetry-plugin-export || true
-	poetry export -f requirements.txt --output requirements.txt --without-hashes
+	# Publishing is now handled by GitHub Actions when you push a tag
+	# Example: git tag v0.1.0 && git push origin v0.1.0

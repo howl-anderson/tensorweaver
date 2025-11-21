@@ -205,7 +205,7 @@ pip install tensorweaver
 # Option 2: Install from source (for contributors)
 git clone https://github.com/howl-anderson/tensorweaver.git
 cd tensorweaver
-poetry install
+uv sync --group dev
 ```
 
 ### **🎯 Quick Start Guide**
