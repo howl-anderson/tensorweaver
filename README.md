@@ -52,25 +52,34 @@ pip install tensorweaver
 ```python
 import tensorweaver as torch  # PyTorch-compatible API!
 
-# Build a neural network (just like PyTorch!)
-class SimpleModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.linear1 = torch.nn.Linear(784, 128)
-        self.relu = torch.nn.ReLU()
-        self.linear2 = torch.nn.Linear(128, 10)
-        
-    def forward(self, x):
-        x = self.relu(self.linear1(x))
-        return self.linear2(x)
+# 1. Prepare Data (y = 2x)
+x = torch.tensor([[1.0], [2.0], [3.0], [4.0]])
+y = torch.tensor([[2.0], [4.0], [6.0], [8.0]])
 
-model = SimpleModel()
+# 2. Define Model
+model = torch.nn.Linear(1, 1)
 
-# Train it
-loss_fn = torch.nn.MSELoss()
+# 3. Train
 optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+criterion = torch.nn.MSELoss()
 
+print("Training...")
+for epoch in range(100):
+    # Forward
+    y_pred = model(x)
+    loss = criterion(y_pred, y)
+    
+    # Backward
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+    
+    if epoch % 20 == 0:
+        print(f"Epoch {epoch}: Loss = {loss.item():.4f}")
+
+# 4. Result
 # The difference? You can see EXACTLY what happens inside! 👀
+print(f"\nPrediction for x=5.0: {model(torch.tensor([[5.0]])).item():.4f} (Expected: 10.0)")
 ```
 
 🚀 **[Try it live in your browser →](https://mybinder.org/v2/gh/howl-anderson/tensorweaver/HEAD?urlpath=%2Fdoc%2Ftree%2Fmilestones%2F01_linear_regression%2Fdemo.ipynb)**
@@ -137,63 +146,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
 > **📝 Note**: Some documentation links are still in development. Check our [milestones](milestones/) for working examples!
 
-## 🎯 **Quick Examples**
 
-<details>
-<summary><b>🔬 See Automatic Differentiation in Action</b></summary>
-
-```python
-import tensorweaver as torch
-
-# Create tensors
-x = torch.tensor([2.0])
-y = torch.tensor([3.0])
-
-# Forward pass
-z = x * y + x**2
-print(f"z = {z.data}")  # [10.0]
-
-# Backward pass - see the magic!
-z.backward()
-print(f"dz/dx = {x.grad}")  # [7.0] = y + 2*x = 3 + 4  
-print(f"dz/dy = {y.grad}")  # [2.0] = x
-```
-
-</details>
-
-<details>
-<summary><b>🧠 Build a Neural Network from Scratch</b></summary>
-
-```python
-import tensorweaver as torch
-
-class MLP(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc1 = torch.nn.Linear(784, 128)
-        self.relu = torch.nn.ReLU()
-        self.fc2 = torch.nn.Linear(128, 10)
-        
-    def forward(self, x):
-        x = self.relu(self.fc1(x))
-        return self.fc2(x)
-
-# Every operation is transparent!
-model = MLP()
-print(model)  # See the architecture
-```
-
-</details>
-
-## 🎯 **Why Engineers Choose TensorWeaver**
-
-Instead of opaque "black box" frameworks, TensorWeaver provides:
-- **Full Transparency** - Every operation is readable, debuggable Python code
-- **Complete Control** - Modify any component to fit your specific needs
-- **PyTorch Compatibility** - Use existing knowledge and code seamlessly
-- **Deep Understanding** - Know exactly what your model is doing at every step
-
-*Join our growing community of engineers who value transparency and control.*
 
 ## 🚀 **Get Started Now**
 
@@ -233,16 +186,6 @@ We welcome you! Please open an issue or submit a pull request - contribution gui
 - **🐛 [Issues](https://github.com/howl-anderson/tensorweaver/issues)** - Bug reports and feature requests
 - **📧 [Follow Updates](https://github.com/howl-anderson/tensorweaver)** - Star/watch for latest changes
 
-## 🏢 **Professional Use Cases**
-
-TensorWeaver excels in scenarios requiring deep understanding and control:
-
-- **🔬 Research & Development** - Implement novel algorithms with full control
-- **🐛 Debugging Complex Models** - Trace gradient flow and identify numerical issues
-- **🏗️ Custom Implementations** - Build specialized layers and operators
-- **📊 Production Prototyping** - Develop and export models to ONNX for deployment
-
-*Need support for your specific use case? Open an issue or join our discussions!*
 
 ## ⭐ **Why Stars Matter**
 
